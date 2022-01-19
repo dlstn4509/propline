@@ -4,6 +4,7 @@ const app = express();
 const path = require('path');
 const vhost = require('vhost');
 const vhttps = require('vhttps');
+const vueHistory = require('connect-history-api-fallback');
 const fs = require('fs');
 // const cookieParser = require('cookie-parser');
 const server = vhttps.init();
@@ -16,6 +17,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 /*************** middleware ***************/
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+// app.use(vueHistory());
 
 /*************** cookie ***************/
 // app.use(cookieParser());
@@ -30,7 +32,6 @@ let options = {
 };
 
 /*************** t1 **************/
-const t1 = require('./t1/app');
 // app.use(
 //   vhost('t1.propline.co.kr', (req, res, next) => {
 //     if (req.secure) {
@@ -40,6 +41,8 @@ const t1 = require('./t1/app');
 //     }
 //   })
 // );
+
+const t1 = require('./t1/app');
 app.use(vhost('t1.propline.co.kr', t1)); // http도 접속 허용
 server.use('t1.propline.co.kr', options.t1Key, t1);
 

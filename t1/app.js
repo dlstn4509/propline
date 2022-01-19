@@ -11,22 +11,15 @@ app.set('view engine', 'ejs');
 app.set('views', './t1/views');
 app.locals.pretty = true;
 
+/*************** middleware ***************/
+
 /*************** router init **************/
-// app.use((req, res, next) => {
-//   let url = req.originalUrl.split('/')[1];
-//   console.log(url);
-//   if (url !== 'css' && url !== 'js' && url !== 'favicon.ico') {
-//     app.use('/' + url, require('./routes/' + url));
-//   }
-//   next();
-// });
+const apiRouter = require('./routes/api');
+app.use('/api', apiRouter);
 
-const aboutRouter = require('./routes/about');
-const kakaoMapRouter = require('./routes/kakaomap');
-const mainRouter = require('./routes/main');
-
-app.use('/about', aboutRouter);
-app.use('/kakaomap', kakaoMapRouter);
-app.use('/main', mainRouter);
+/*************** vue init **************/
+app.get('/*', function (req, res, next) {
+  res.sendFile(path.join(__dirname, './public', 'index.html'));
+});
 
 module.exports = app;
