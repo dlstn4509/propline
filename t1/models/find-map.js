@@ -3,7 +3,8 @@ const { pool } = require('../modules/mysql-init');
 const findAllMap = async (top, bottom, left, right, limit) => {
   try {
     let sql = `
-    SELECT * FROM maps 
+    SELECT item_no, sido, sigungu, dong, lat, lng, item_type, trade_type,	price, deposit, rent, mfee
+    FROM maps 
     WHERE
     lat < ${top} AND
     lat > ${bottom} AND
@@ -21,7 +22,8 @@ const findAllMap = async (top, bottom, left, right, limit) => {
 const findAllMapCnt = async (top, bottom, left, right) => {
   try {
     let sql = `
-    SELECT * FROM maps 
+    SELECT lat, lng
+    FROM maps 
     WHERE
     lat < ${top} AND
     lat > ${bottom} AND
