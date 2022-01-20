@@ -37,4 +37,23 @@ const findAllMapCnt = async (top, bottom, left, right) => {
   }
 };
 
-module.exports = { findAllMap, findAllMapCnt };
+const makeMarker = async (top, bottom, left, right) => {
+  try {
+    let sql = `
+    SELECT lat, lng
+    FROM maps
+    WHERE
+    lat < ${top} AND
+    lat > ${bottom} AND
+    lng > ${left} AND
+    lng < ${right}
+    
+    `;
+    const [rs] = await pool.execute(sql);
+    return { rs };
+  } catch (err) {
+    throw new Error(err);
+  }
+};
+
+module.exports = { findAllMap, findAllMapCnt, makeMarker };
