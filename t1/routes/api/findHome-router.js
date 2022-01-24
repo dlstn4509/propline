@@ -26,20 +26,30 @@ router.get('/', async (req, res, next) => {
 router.get('/marker', async (req, res, next) => {
   try {
     let { top, bottom, left, right } = req.query;
+    let _top = Number(top);
+    let _bottom = Number(bottom);
+    let _left = Number(left);
+    let _right = Number(right);
+    let _height = (_top - _bottom) / 5;
+    let _width = (_right - _left) / 5;
     const { rs } = await makeMarker(top, bottom, left, right);
-    let markers = [[], []];
-    for (let i = 0; i < rs.length; i++) {
-      markers[0].push(rs[i].lat);
-      markers[1].push(rs[i].lng);
+
+    let data = [[], [], [], [], []];
+
+    for (let i = 1; i <= 5; i++) {
+      for (let j = 1; j <= 5; j++) {
+        let arr = rs.filter((v) => {
+          return (
+            v.lng > _left + _width * (i - 1) &&
+            v.lng < _left + _width * i &&
+            v.lat < _top - _height * (j - 1) &&
+            v.lat > _top - _height * j
+          );
+        });
+        data[i - 1].push(arr);
+      }
     }
-    markers[0].sort();
-    markers[1].sort();
-
-    new kakao.maps.Marker({
-      position: new kakao.maps.LatLng(123, 36),
-    });
-
-    res.status(200).json(markers);
+    res.status(200).json(data);
   } catch (err) {
     res.status(500).json(err);
   }
