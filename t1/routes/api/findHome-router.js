@@ -23,7 +23,40 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-router.get('/marker', async (req, res, next) => {
+router.get('/smmarker', async (req, res, next) => {
+  try {
+    let { top, bottom, left, right } = req.query;
+    let _top = Number(top);
+    let _bottom = Number(bottom);
+    let _left = Number(left);
+    let _right = Number(right);
+    let _height = (_top - _bottom) / 10;
+    let _width = (_right - _left) / 10;
+    const { rs } = await makeMarker(top, bottom, left, right);
+    let data = [];
+
+    for (let i = 1; i <= 10; i++) {
+      let allDataArr = [];
+      for (let j = 1; j <= 10; j++) {
+        let arr = rs.filter((v) => {
+          return (
+            v.lng > _left + _width * (i - 1) &&
+            v.lng < _left + _width * i &&
+            v.lat < _top - _height * (j - 1) &&
+            v.lat > _top - _height * j
+          );
+        });
+        allDataArr.push(arr);
+      }
+      data.push(allDataArr);
+    }
+    res.status(200).json(data);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+router.get('/lgMarker', async (req, res, next) => {
   try {
     let { top, bottom, left, right } = req.query;
     let _top = Number(top);
@@ -33,10 +66,10 @@ router.get('/marker', async (req, res, next) => {
     let _height = (_top - _bottom) / 5;
     let _width = (_right - _left) / 5;
     const { rs } = await makeMarker(top, bottom, left, right);
-
-    let data = [[], [], [], [], []];
+    let data = [];
 
     for (let i = 1; i <= 5; i++) {
+      let allDataArr = [];
       for (let j = 1; j <= 5; j++) {
         let arr = rs.filter((v) => {
           return (
@@ -46,8 +79,9 @@ router.get('/marker', async (req, res, next) => {
             v.lat > _top - _height * j
           );
         });
-        data[i - 1].push(arr);
+        allDataArr.push(arr);
       }
+      data.push(allDataArr);
     }
     res.status(200).json(data);
   } catch (err) {
