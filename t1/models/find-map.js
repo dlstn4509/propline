@@ -43,10 +43,10 @@ const makeMarker = async (top, bottom, left, right) => {
     SELECT lat, lng
     FROM maps
     WHERE
-    lat < ${top} AND
-    lat > ${bottom} AND
-    lng > ${left} AND
-    lng < ${right}
+    lat < ${top} - 0.001 AND
+    lat > ${bottom} - 0.001 AND
+    lng > ${left} - 0.001 AND
+    lng < ${right} - 0.001
     `;
     const [rs] = await pool.execute(sql);
     return { rs };

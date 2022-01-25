@@ -34,6 +34,9 @@ router.get('/smmarker', async (req, res, next) => {
     let _width = (_right - _left) / 10;
     const { rs } = await makeMarker(top, bottom, left, right);
     let data = [];
+    let latSum = 0;
+    let lngSum = 0;
+    let finData = [];
 
     for (let i = 1; i <= 10; i++) {
       let allDataArr = [];
@@ -50,7 +53,24 @@ router.get('/smmarker', async (req, res, next) => {
       }
       data.push(allDataArr);
     }
-    res.status(200).json(data);
+    for (let i = 0; i < data.length; i++) {
+      for (let j = 0; j < data[i].length; j++) {
+        latSum = 0;
+        lngSum = 0;
+        if (data[i][j].length !== 0) {
+          for (let k = 0; k < data[i][j].length; k++) {
+            latSum += data[i][j][k].lat;
+            lngSum += data[i][j][k].lng;
+          }
+          finData.push([
+            latSum / data[i][j].length,
+            lngSum / data[i][j].length,
+            data[i][j].length,
+          ]);
+        }
+      }
+    }
+    res.status(200).json(finData);
   } catch (err) {
     res.status(500).json(err);
   }
@@ -67,6 +87,9 @@ router.get('/lgMarker', async (req, res, next) => {
     let _width = (_right - _left) / 5;
     const { rs } = await makeMarker(top, bottom, left, right);
     let data = [];
+    let latSum = 0;
+    let lngSum = 0;
+    let finData = [];
 
     for (let i = 1; i <= 5; i++) {
       let allDataArr = [];
@@ -83,7 +106,24 @@ router.get('/lgMarker', async (req, res, next) => {
       }
       data.push(allDataArr);
     }
-    res.status(200).json(data);
+    for (let i = 0; i < data.length; i++) {
+      for (let j = 0; j < data[i].length; j++) {
+        latSum = 0;
+        lngSum = 0;
+        if (data[i][j].length !== 0) {
+          for (let k = 0; k < data[i][j].length; k++) {
+            latSum += data[i][j][k].lat;
+            lngSum += data[i][j][k].lng;
+          }
+          finData.push([
+            latSum / data[i][j].length,
+            lngSum / data[i][j].length,
+            data[i][j].length,
+          ]);
+        }
+      }
+    }
+    res.status(200).json(finData);
   } catch (err) {
     res.status(500).json(err);
   }
