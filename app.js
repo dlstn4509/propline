@@ -49,6 +49,12 @@ server.use('t1.propline.co.kr', options.t1Key, t1);
 /*************** t2 **************/
 const t2 = require('./t2/app');
 app.use(vhost('t2.propline.co.kr', t2));
+/*************** t3 **************/
+const t3 = require('./t3/app');
+app.use(vhost('t3.propline.co.kr', t3));
+/*************** t4 **************/
+const t4 = require('./t4/app');
+app.use(vhost('t4.propline.co.kr', t4));
 
 /*************** server init **************/
 require('./modules/server-init')(app, server);
