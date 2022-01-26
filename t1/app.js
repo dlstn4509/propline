@@ -12,10 +12,12 @@ app.set('views', './t1/views');
 app.locals.pretty = true;
 
 /*************** middleware ***************/
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 /*************** router init **************/
-const apiRouter = require('./routes/api');
-app.use('/api', apiRouter);
+const apiMapRouter = require('./routes/api/map');
+app.use('/api/map', apiMapRouter);
 
 /*************** vue init **************/
 app.get('/*', function (req, res, next) {
