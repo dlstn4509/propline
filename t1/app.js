@@ -5,6 +5,7 @@ require('dotenv').config();
 
 /*************** static init **************/
 app.use('/', express.static(path.join(__dirname, 'public')));
+app.use('/uploads', express.static(path.join(__dirname, 'storages')));
 
 /************** view engine ***************/
 app.set('view engine', 'ejs');

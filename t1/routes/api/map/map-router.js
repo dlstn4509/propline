@@ -4,8 +4,7 @@ const { findAllMap } = require('../../../models/map/FindMap');
 
 router.get('/', async (req, res, next) => {
   try {
-    let { top, bottom, left, right, limit, sido, sigungu, dong, item_type } =
-      req.query;
+    let { top, bottom, left, right, limit, sido, sigungu, dong, item_type } = req.query;
     const { maps } = await findAllMap(
       top,
       bottom,

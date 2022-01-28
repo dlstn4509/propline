@@ -29,7 +29,6 @@ const findAllMap = async (
       sql += `LIMIT ${limit}`;
     }
     const [maps] = await pool.execute(sql);
-    console.log(sql);
     return { maps };
   } catch (err) {
     throw new Error(err);
@@ -48,7 +47,7 @@ const makeMarker = async (
 ) => {
   try {
     let sql = `
-    SELECT lat, lng
+    SELECT *
     FROM maps
     WHERE
     lat < ${top} - 0.001 AND
@@ -86,5 +85,3 @@ const findCenter = async (sido, sigungu, dong, item_type) => {
 };
 
 module.exports = { findAllMap, makeMarker, findCenter };
-
-// https://t1.propline.co.kr/api/map/center?sido=서울&sigungu=강남구&dong=개포동&item_type=풀옵션
