@@ -12,6 +12,7 @@ router.get('/sm', async (req, res, next) => {
     let _left = Number(left);
     let _right = Number(right);
     const { rs } = await makeMarker(
+      // const { rs } = await findAllMap(
       top,
       bottom,
       left,
@@ -21,6 +22,7 @@ router.get('/sm', async (req, res, next) => {
       dong,
       item_type
     );
+    // res.status(200).json(data);
     const data = await makeCluster(rs, _top, _bottom, _left, _right, 10);
     res.status(200).json(data);
   } catch (err) {

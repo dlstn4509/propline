@@ -24,41 +24,13 @@ const findAllMap = async (
     sigungu LIKE '${sigungu}' AND
     dong LIKE '${dong}' AND
     item_type LIKE '${item_type}'
-    LIMIT ${limit}
     `;
+    if (limit) {
+      sql += `LIMIT ${limit}`;
+    }
     const [maps] = await pool.execute(sql);
+    console.log(sql);
     return { maps };
-  } catch (err) {
-    throw new Error(err);
-  }
-};
-
-const findAllMapCnt = async (
-  top,
-  bottom,
-  left,
-  right,
-  sido,
-  sigungu,
-  dong,
-  item_type
-) => {
-  try {
-    let sql = `
-    SELECT lat, lng
-    FROM maps 
-    WHERE
-    lat < ${top} AND
-    lat > ${bottom} AND
-    lng > ${left} AND
-    lng < ${right} AND
-    sido LIKE '${sido}' AND
-    sigungu LIKE '${sigungu}' AND
-    dong LIKE '${dong}' AND
-    item_type LIKE '${item_type}'
-    `;
-    const [mapsCnt] = await pool.execute(sql);
-    return { mapsCnt };
   } catch (err) {
     throw new Error(err);
   }
@@ -98,7 +70,7 @@ const makeMarker = async (
 const findCenter = async (sido, sigungu, dong, item_type) => {
   try {
     let sql = `
-    SELECT lat, lng
+    SELECT lat, lng, price, deposit, rent, mfee
     FROM maps
     WHERE
     sido LIKE '${sido}' AND
@@ -113,4 +85,6 @@ const findCenter = async (sido, sigungu, dong, item_type) => {
   }
 };
 
-module.exports = { findAllMap, findAllMapCnt, makeMarker, findCenter };
+module.exports = { findAllMap, makeMarker, findCenter };
+
+// https://t1.propline.co.kr/api/map/center?sido=서울&sigungu=강남구&dong=개포동&item_type=풀옵션
