@@ -15,12 +15,13 @@ const makeCluster = (rs, top, bottom, left, right, cnt) => {
           v.lat > top - height * j
         );
       });
+      console.log(arr.length);
       if (arr.length !== 0) {
         for (let k = 0; k < arr.length; k++) {
           latSum += arr[k].lat;
           lngSum += arr[k].lng;
         }
-        data.push([latSum / arr.length, lngSum / arr.length, arr.length]);
+        data.push([latSum / arr.length, lngSum / arr.length, arr.length, arr]);
       }
     }
   }
