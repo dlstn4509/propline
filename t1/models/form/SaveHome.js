@@ -31,9 +31,9 @@ const saveFile = async (insertId, key, val) => {
   try {
     let sql = `
     INSERT INTO maps2file
-    SET originalname=?, filename=?, mimetype=?, fieldname=?, size=?, maps2_id=?
+    SET originalname=?, filename=?, mimetype=?, fieldname=?, size=?, maps2_item_no=?
     `;
-    let values = [val.originalname, key, val.mimetype, val.fieldname, val.size, insertId];
+    let values = [val.originalname, val.filename, val.mimetype, val.fieldname, val.size, insertId];
     const [data] = await pool.execute(sql, values);
     return data;
   } catch (err) {

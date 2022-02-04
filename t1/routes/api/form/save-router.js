@@ -2,6 +2,7 @@ const path = require('path');
 const express = require('express');
 const router = express.Router();
 const createError = require('http-errors');
+const ffmpegInit = require('../../../middlewares/ffmpeg-mw');
 const sharpInit = require('../../../middlewares/sharp-mw');
 const upload = require('../../../middlewares/multer-mw');
 const { saveHome, saveFile } = require('../../../models/form/SaveHome');
@@ -10,6 +11,7 @@ router.post(
   '/',
   upload.fields([{ name: 'image1' }, { name: 'image2' }, { name: 'video1' }]),
   sharpInit(),
+  ffmpegInit(),
   async (req, res, next) => {
     try {
       let { sido, sigungu, dong, lat, lng, item_type, trade_type, price, deposit, rent, mfee } =
@@ -33,7 +35,7 @@ router.post(
           return next(err);
         }
       }
-      res.status(200).json({ success: true });
+      res.status(200).redirect('https://t1.propline.co.kr/form');
     } catch (err) {
       res.status(500).json(err);
     }

@@ -21,6 +21,11 @@ module.exports = () => {
               ])
               .toFile(path.join(loc, image.filename));
           }
+        } else {
+          for (let video of val) {
+            let loc = path.join(video.destination, './thumb');
+            await ensureDir(loc);
+          }
         }
       }
       next();

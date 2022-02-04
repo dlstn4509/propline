@@ -19,11 +19,13 @@ app.use(express.urlencoded({ extended: false }));
 /*************** router init **************/
 const apiMapRouter = require('./routes/api/map');
 const apiFormRouter = require('./routes/api/form');
+const apiViewRouter = require('./routes/api/view');
 app.use('/api/map', apiMapRouter);
 app.use('/api/form', apiFormRouter);
+app.use('/api/view', apiViewRouter);
 
 /*************** vue init **************/
-let paths = ['/main', '/about', '/maps', '/form'];
+let paths = ['/main', '/about', '/maps', '/form', '/view/:item_no'];
 app.get(paths, function (req, res, next) {
   res.sendFile(path.join(__dirname, './public', 'index.html'));
 });

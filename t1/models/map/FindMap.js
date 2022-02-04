@@ -1,20 +1,10 @@
 const { pool } = require('../../modules/mysql-md');
 
-const findAllMap = async (
-  top,
-  bottom,
-  left,
-  right,
-  limit,
-  sido,
-  sigungu,
-  dong,
-  item_type
-) => {
+const findAllMap = async (top, bottom, left, right, limit, sido, sigungu, dong, item_type) => {
   try {
     let sql = `
     SELECT *
-    FROM maps 
+    FROM maps2 
     WHERE
     lat < ${top} AND
     lat > ${bottom} AND
@@ -35,20 +25,11 @@ const findAllMap = async (
   }
 };
 
-const makeMarker = async (
-  top,
-  bottom,
-  left,
-  right,
-  sido,
-  sigungu,
-  dong,
-  item_type
-) => {
+const makeMarker = async (top, bottom, left, right, sido, sigungu, dong, item_type) => {
   try {
     let sql = `
     SELECT *
-    FROM maps
+    FROM maps2
     WHERE
     lat < ${top} - 0.001 AND
     lat > ${bottom} - 0.001 AND
@@ -70,7 +51,7 @@ const findCenter = async (sido, sigungu, dong, item_type) => {
   try {
     let sql = `
     SELECT lat, lng, price, deposit, rent, mfee
-    FROM maps
+    FROM maps2
     WHERE
     sido LIKE '${sido}' AND
     sigungu LIKE '${sigungu}' AND

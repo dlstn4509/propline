@@ -4,7 +4,7 @@ const searchMap = async (lat, lng) => {
   try {
     let sql = `
     SELECT lat, lng
-    FROM maps
+    FROM maps2
     WHERE lat=${lat} AND lng=${lng}
     `;
     const data = await pool.execute(sql);
