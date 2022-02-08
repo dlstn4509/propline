@@ -19,8 +19,8 @@ module.exports = () => {
             new ffmpeg(oriMP4File, async (err, video) => {
               if (!err) {
                 let waterOption = {
-                  position: 'SE', //south east (남동쪽)
-                  margin_east: video.metadata.video.resolution.w * 0.1,
+                  position: 'SW', //south east (남동쪽)
+                  margin_west: video.metadata.video.resolution.w * 0.1,
                   margin_sud: video.metadata.video.resolution.h * 0.1,
                 };
                 video.fnAddWatermark(waterMarkImg, waterMarkMP4File, waterOption, (error, file) => {
