@@ -4,7 +4,7 @@ const app = express();
 const path = require('path');
 const vhost = require('vhost');
 const vhttps = require('vhttps');
-const vueHistory = require('connect-history-api-fallback');
+const cors = require('cors');
 const fs = require('fs');
 // const cookieParser = require('cookie-parser');
 const server = vhttps.init();
@@ -17,6 +17,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 /*************** middleware ***************/
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cors());
 // app.use(vueHistory());
 
 /*************** cookie ***************/

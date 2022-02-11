@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const path = require('path');
+const cors = require('cors');
 require('dotenv').config();
 
 /*************** static init **************/
@@ -15,14 +16,17 @@ app.locals.pretty = true;
 /*************** middleware ***************/
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cors());
 
 /*************** router init **************/
 const apiMapRouter = require('./routes/api/map');
 const apiFormRouter = require('./routes/api/form');
 const apiViewRouter = require('./routes/api/view');
+// const buildingInfoRouter = require('./routes/api/buildingInfo');
 app.use('/api/map', apiMapRouter);
 app.use('/api/form', apiFormRouter);
 app.use('/api/view', apiViewRouter);
+// app.use('/api/buildingInfo', buildingInfoRouter);
 
 /*************** vue init **************/
 let paths = ['/main', '/about', '/maps', '/form', '/view/:item_no'];

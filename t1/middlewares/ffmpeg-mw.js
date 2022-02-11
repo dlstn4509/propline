@@ -8,7 +8,7 @@ module.exports = () => {
       for (let [key, val] of Object.entries(req.files)) {
         if (key.includes('video')) {
           for (let videos of val) {
-            const oriMP4File = videos.path;
+            const oriFile = videos.path;
             const waterMarkMP4File = path.join(
               videos.destination,
               '../beforethumb',
@@ -16,7 +16,7 @@ module.exports = () => {
             );
             const waterMarkImg = './t1/storages/image/thumb.png';
 
-            new ffmpeg(oriMP4File, async (err, video) => {
+            new ffmpeg(oriFile, async (err, video) => {
               if (!err) {
                 let waterOption = {
                   position: 'SW', //south east (남동쪽)
@@ -26,9 +26,12 @@ module.exports = () => {
                 video.fnAddWatermark(waterMarkImg, waterMarkMP4File, waterOption, (error, file) => {
                   if (!error) {
                     shell.exec(
-                      `ffmpeg -i ${file} -vf "scale=320:240" ${videos.destination}/thumb/${videos.filename} -y`
+                      `ffmpeg -i ${file} -vf "scale=320:240" ${videos.destination}/thumb/${videos.filename} -y`,
+                      () => {
+                        console.log('done');
+                        // next();
+                      }
                     );
-                    console.log('finish watermark!');
                   }
                 });
               }
@@ -36,6 +39,7 @@ module.exports = () => {
           }
         }
       }
+      // console.log('done');
       next();
     } catch (err) {
       next(err);

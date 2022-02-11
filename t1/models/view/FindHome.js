@@ -17,6 +17,7 @@ const findHome = async (item_no) => {
     WHERE maps2_item_no=${item_no}
     `;
     const [file] = await pool.execute(sql);
+
     data.push(home, file);
     return data;
   } catch (err) {
