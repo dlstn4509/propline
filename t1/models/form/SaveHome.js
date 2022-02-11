@@ -21,14 +21,13 @@ const saveHome = async (
     sql = `
     INSERT INTO maps2
     SET sido=?, sigungu=?, dong=?, bun=?,
-        ji=?, lat=?, lng=?, item_type=?, trade_type=?, price=?, deposit=?, rent=?, mfee=?, bcode=?
+        lat=?, lng=?, item_type=?, trade_type=?, price=?, deposit=?, rent=?, mfee=?, bcode=?
     `;
     let values = [
       sido,
       sigungu,
       dong,
       bun,
-      ji,
       lat,
       lng,
       item_type,
@@ -39,6 +38,7 @@ const saveHome = async (
       mfee,
       bcode,
     ];
+    ji ? (sql += `ji=${ji}`) : '';
     const [data] = await pool.execute(sql, values);
     return data;
   } catch (err) {

@@ -48,14 +48,16 @@ router.post(
         mfee,
         bcode
       );
-      for (let [key, [val]] of Object.entries(req.files)) {
-        const file = await saveFile(data.insertId, key, val);
-        if (file.affectedRows !== 1) {
-          return next(err);
+      if (req.files) {
+        for (let [key, [val]] of Object.entries(req.files)) {
+          const file = await saveFile(data.insertId, key, val);
+          if (file.affectedRows !== 1) {
+            return next(err);
+          }
         }
       }
-      // res.json(req.files);
-      res.status(200).redirect('https://t1.propline.co.kr/form');
+      res.json(req.files);
+      // res.status(200).redirect('https://t1.propline.co.kr/form');
     } catch (err) {
       res.status(500).json(err);
     }

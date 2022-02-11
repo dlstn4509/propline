@@ -21,9 +21,6 @@ const buildingInfo = async (bcode, _bun, _ji) => {
     const data = await axios.get(
       `http://apis.data.go.kr/1613000/BldRgstService_v2/getBrTitleInfo?ServiceKey=${BUILDINGINFO_KEY}&sigunguCd=${sigunguCd}&bjdongCd=${bjdongCd}&bun=${bun}&ji=${ji}&numOfRows=100`
     );
-    console.log(
-      `http://apis.data.go.kr/1613000/BldRgstService_v2/getBrTitleInfo?ServiceKey=${BUILDINGINFO_KEY}&sigunguCd=${sigunguCd}&bjdongCd=${bjdongCd}&bun=${bun}&ji=${ji}`
-    );
     return data.data.response.body.items.item;
   } catch (err) {
     throw new Error(err);
