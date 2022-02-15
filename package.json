@@ -5,6 +5,9 @@
   "main": "index.js",
   "scripts": {
     "serve": "nodemon app",
+    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
+    "dev:server": "nodemon app",
+    "dev:client": "cd ../react/t1 && yarn build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -12,6 +15,7 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.24.0",
+    "concurrently": "^7.0.0",
     "connect-history-api-fallback": "^1.6.0",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",

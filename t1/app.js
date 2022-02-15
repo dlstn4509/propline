@@ -22,14 +22,12 @@ app.use(cors());
 const apiMapRouter = require('./routes/api/map');
 const apiFormRouter = require('./routes/api/form');
 const apiViewRouter = require('./routes/api/view');
-// const buildingInfoRouter = require('./routes/api/buildingInfo');
 app.use('/api/map', apiMapRouter);
 app.use('/api/form', apiFormRouter);
 app.use('/api/view', apiViewRouter);
-// app.use('/api/buildingInfo', buildingInfoRouter);
 
 /*************** vue init **************/
-let paths = ['/main', '/about', '/maps', '/form', '/view/:item_no'];
+let paths = ['/main', '/about', '/maps', '/form', '/view/:item_no', '/buildinginfo'];
 app.get(paths, function (req, res, next) {
   res.sendFile(path.join(__dirname, './public', 'index.html'));
 });
