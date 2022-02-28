@@ -5,22 +5,22 @@ const makeCate = async (sido, sigungu, dong) => {
     let sql = '';
     if (sido && sigungu && dong) {
       sql = `SELECT item_type
-              FROM maps2
+              FROM maps
               WHERE sido='${sido}' AND sigungu='${sigungu}' AND dong='${dong}'
               GROUP BY item_type `;
     } else if (sido && sigungu) {
       sql = `SELECT dong
-              FROM maps2
+              FROM maps
               WHERE sido='${sido}' AND sigungu='${sigungu}'
               GROUP BY dong `;
     } else if (sido) {
       sql = `SELECT sigungu
-              FROM maps2
+              FROM maps
               WHERE sido='${sido}'
               GROUP BY sigungu `;
     } else {
       sql = `SELECT sido
-              FROM maps2
+              FROM maps
               GROUP BY sido
       `;
     }

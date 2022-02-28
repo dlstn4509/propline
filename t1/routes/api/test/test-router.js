@@ -3,9 +3,10 @@ const express = require('express');
 const router = express.Router();
 const createError = require('http-errors');
 
-router.get('/:item_no', async (req, res, next) => {
+router.get('/', async (req, res, next) => {
   try {
-    res.status(200).json('빌딩인포');
+    const { id } = req.query;
+    res.status(200).send(id);
   } catch (err) {
     res.status(500).json(err);
   }

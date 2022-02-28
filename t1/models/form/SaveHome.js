@@ -19,7 +19,7 @@ const saveHome = async (
   try {
     let sql = '';
     sql = `
-    INSERT INTO maps2
+    INSERT INTO maps
     SET sido=?, sigungu=?, dong=?, bun=?,
         lat=?, lng=?, item_type=?, trade_type=?, price=?, deposit=?, rent=?, mfee=?, bcode=?
     `;

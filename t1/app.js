@@ -22,9 +22,11 @@ app.use(cors());
 const apiMapRouter = require('./routes/api/map');
 const apiFormRouter = require('./routes/api/form');
 const apiViewRouter = require('./routes/api/view');
+const apiTestRouter = require('./routes/api/test');
 app.use('/api/map', apiMapRouter);
 app.use('/api/form', apiFormRouter);
 app.use('/api/view', apiViewRouter);
+app.use('/api/test', apiTestRouter);
 
 /*************** vue init **************/
 let paths = ['/main', '/about', '/maps', '/form', '/view/:item_no', '/buildinginfo'];

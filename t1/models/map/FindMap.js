@@ -4,7 +4,7 @@ const findAllMap = async (top, bottom, left, right, limit, sido, sigungu, dong, 
   try {
     let sql = `
     SELECT *
-    FROM maps2 
+    FROM maps
     WHERE
     lat < ${top} AND
     lat > ${bottom} AND
@@ -29,7 +29,7 @@ const makeMarker = async (top, bottom, left, right, sido, sigungu, dong, item_ty
   try {
     let sql = `
     SELECT *
-    FROM maps2
+    FROM maps
     WHERE
     lat < ${top} - 0.001 AND
     lat > ${bottom} - 0.001 AND
@@ -51,7 +51,7 @@ const findCenter = async (sido, sigungu, dong, item_type) => {
   try {
     let sql = `
     SELECT lat, lng, price, deposit, rent, mfee
-    FROM maps2
+    FROM maps
     WHERE
     sido LIKE '${sido}' AND
     sigungu LIKE '${sigungu}' AND
