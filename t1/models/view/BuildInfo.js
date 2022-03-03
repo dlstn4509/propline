@@ -21,7 +21,12 @@ const buildingInfo = async (bcode, _bun, _ji, infotype) => {
     const data = await axios.get(
       `http://apis.data.go.kr/1613000/BldRgstService_v2/${infotype}?ServiceKey=${BUILDINGINFO_KEY}&sigunguCd=${sigunguCd}&bjdongCd=${bjdongCd}&bun=${bun}&ji=${ji}&numOfRows=10000`
     );
-    return data.data.response.body.items.item;
+    let lists = data.data.response.body.items.item;
+
+    lists.sort((a, b) => (a.bldNm < b.bldNm ? -1 : a.bldNm > b.bldNm ? 1 : 0));
+    lists.sort((a, b) => (a.bldNm.length < b.bldNm.length ? 1 : a.bldNm.length > b.bldNm.length ? -1 : 0));
+
+    return lists;
   } catch (err) {
     throw new Error(err);
   }
