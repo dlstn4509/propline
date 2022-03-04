@@ -10,8 +10,7 @@ const { saveBoard, saveFile } = require('../../../models/form/SaveBoard');
 
 router.post(
   '/',
-  upload.fields([{ name: 'image1' }, { name: 'video1' }]),
-  // upload.fields([{ name: 'image1' }, { name: 'image2' }, { name: 'image3' }, { name: 'video1' }]),
+  upload.fields([{ name: 'image1' }, { name: 'image2' }, { name: 'image3' }, { name: 'video1' }]),
   sharpInit(),
   ffmpegInit(),
   makeMp4Init(),
@@ -19,6 +18,7 @@ router.post(
   async (req, res, next) => {
     try {
       const data = await saveBoard(req.body);
+      console.log(data);
       if (req.files && data.affectedRows === 1) {
         for (let [key, [val]] of Object.entries(req.files)) {
           const file = await saveFile(data.insertId, key, val);

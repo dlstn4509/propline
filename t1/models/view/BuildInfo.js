@@ -22,6 +22,7 @@ const buildingInfo = async (bcode, _bun, _ji, infotype) => {
       `http://apis.data.go.kr/1613000/BldRgstService_v2/${infotype}?ServiceKey=${BUILDINGINFO_KEY}&sigunguCd=${sigunguCd}&bjdongCd=${bjdongCd}&bun=${bun}&ji=${ji}&numOfRows=10000`
     );
     let lists = data.data.response.body.items.item;
+    lists = lists.length ? lists : [lists];
 
     lists.sort((a, b) => (a.bldNm < b.bldNm ? -1 : a.bldNm > b.bldNm ? 1 : 0));
     lists.sort((a, b) => (a.bldNm.length < b.bldNm.length ? 1 : a.bldNm.length > b.bldNm.length ? -1 : 0));
@@ -41,16 +42,14 @@ const junyubu = async (bcode, _bun, _ji, infotype, bldNm, dongNm) => {
     let ji = _ji === 'undefined' ? '0000' : makeBunJi(_ji);
     let sigunguCd = bcode.substring(0, 5);
     let bjdongCd = bcode.substring(5, 10);
-
     const data = await axios.get(
       `http://apis.data.go.kr/1613000/BldRgstService_v2/${infotype}?ServiceKey=${BUILDINGINFO_KEY}&sigunguCd=${sigunguCd}&bjdongCd=${bjdongCd}&bun=${bun}&ji=${ji}&dongNm=${encodeURI(
         dongNm
       )}&numOfRows=10000`
     );
     let lists = data.data.response.body.items.item;
-
     for (let v of lists) {
-      if (v.bldNm === bldNm) {
+      if (v.dongNm == dongNm || v.bldNm === bldNm) {
         set.add(v.hoNm);
         arr.push(v);
       }
@@ -62,7 +61,6 @@ const junyubu = async (bcode, _bun, _ji, infotype, bldNm, dongNm) => {
     allArr.push(arr);
     allArr[1].sort((a, b) => (a.hoNm < b.hoNm ? -1 : a.hoNm > b.hoNm ? 1 : 0));
     allArr[1].sort((a, b) => (a.hoNm.length < b.hoNm.length ? -1 : a.hoNm.length > b.hoNm.length ? 1 : 0));
-
     return allArr;
   } catch (err) {
     throw new Error(err);
