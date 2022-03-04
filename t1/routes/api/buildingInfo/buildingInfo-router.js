@@ -2,8 +2,7 @@ const path = require('path');
 const express = require('express');
 const router = express.Router();
 const createError = require('http-errors');
-const { findHome } = require('../../../models/view/FindHome');
-const { buildingInfo, junyubu } = require('../../../models/view/BuildInfo');
+const { buildingInfo, junyubu } = require('../../../models/buildingInfo/BuildingInfo');
 
 router.get('/:item_no', async (req, res, next) => {
   try {

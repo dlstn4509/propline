@@ -6,7 +6,7 @@ const upload = require('../../../middlewares/multer-mw');
 const sharpInit = require('../../../middlewares/sharp-mw');
 const makeMp4Init = require('../../../middlewares/makeMp4-mw');
 const ffmpegInit = require('../../../middlewares/ffmpeg-mw');
-const { saveBoard, saveFile } = require('../../../models/form/SaveBoard');
+const { saveBoard, saveFile } = require('../../../models/board/SaveBoard');
 
 router.post(
   '/',
@@ -18,7 +18,6 @@ router.post(
   async (req, res, next) => {
     try {
       const data = await saveBoard(req.body);
-      console.log(data);
       if (req.files && data.affectedRows === 1) {
         for (let [key, [val]] of Object.entries(req.files)) {
           const file = await saveFile(data.insertId, key, val);
@@ -28,7 +27,7 @@ router.post(
         }
       }
       // res.status(200).json(req.files);
-      res.status(200).redirect('https://t1.propline.co.kr/form');
+      res.status(200).redirect('https://t1.propline.co.kr/board/form');
     } catch (err) {
       res.status(500).json(err);
     }

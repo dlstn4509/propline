@@ -20,18 +20,16 @@ app.use(cors());
 
 /*************** router init **************/
 const apiMapRouter = require('./routes/api/map');
-const apiFormRouter = require('./routes/api/form');
 const apiBuildingRouter = require('./routes/api/buildingInfo');
 const apiBoardRouter = require('./routes/api/board');
 // const apiTestRouter = require('./routes/api/test');
 app.use('/api/map', apiMapRouter);
-app.use('/api/form', apiFormRouter);
 app.use('/api/buildinginfo', apiBuildingRouter);
 app.use('/api/board', apiBoardRouter);
 // app.use('/api/test', apiTestRouter);
 
 /*************** vue init **************/
-let paths = ['/main', '/about', '/maps', '/buildinginfo', '/board', '/form'];
+let paths = ['/main', '/about', '/maps', '/buildinginfo', '/board', '/board/form'];
 app.get(paths, function (req, res, next) {
   res.sendFile(path.join(__dirname, './public', 'index.html'));
 });
