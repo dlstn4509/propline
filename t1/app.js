@@ -29,7 +29,7 @@ app.use('/api/board', apiBoardRouter);
 // app.use('/api/test', apiTestRouter);
 
 /*************** vue init **************/
-let paths = ['/main', '/about', '/maps', '/buildinginfo', '/board', '/board/form'];
+let paths = ['/main', '/about', '/maps', '/buildinginfo', '/board', '/board/:page', '/board/form'];
 app.get(paths, function (req, res, next) {
   res.sendFile(path.join(__dirname, './public', 'index.html'));
 });
