@@ -18,6 +18,8 @@ const findLists = async (startIdx, listCnt) => {
     let sql = `
       SELECT B.*, BF.mimetype FROM board AS B
       LEFT JOIN boardfile AS BF ON b.id = BF.board_id
+      GROUP BY B.id
+      ORDER BY B.id DESC
       LIMIT ?, ?
     `;
     const [lists] = await pool.execute(sql, [startIdx, listCnt]);

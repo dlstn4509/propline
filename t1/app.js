@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const cors = require('cors');
+const method = require('./middlewares/method-mw');
 require('dotenv').config();
 
 /*************** static init **************/
@@ -17,6 +18,7 @@ app.locals.pretty = true;
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors());
+app.use(method());
 
 /*************** router init **************/
 const apiMapRouter = require('./routes/api/map');
@@ -29,7 +31,17 @@ app.use('/api/board', apiBoardRouter);
 // app.use('/api/test', apiTestRouter);
 
 /*************** vue init **************/
-let paths = ['/main', '/about', '/maps', '/buildinginfo', '/board', '/board/:page', '/board/form'];
+let paths = [
+  '/main',
+  '/about',
+  '/maps',
+  '/buildinginfo',
+  '/board',
+  '/board/:page',
+  '/board/form',
+  '/board/form/:id',
+  '/board/view/:id',
+];
 app.get(paths, function (req, res, next) {
   res.sendFile(path.join(__dirname, './public', 'index.html'));
 });

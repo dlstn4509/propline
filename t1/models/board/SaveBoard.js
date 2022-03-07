@@ -5,10 +5,9 @@ const saveBoard = async (body) => {
     const { title, writer, content, image1, image2, image3, video1 } = body;
     let sql = `
       INSERT INTO board
-      SET title=?, writer=?, content=?
+      SET title=${title}, writer=${writer}, content=${content}
     `;
-    let values = [title, writer, content];
-    const [data] = await pool.execute(sql, values);
+    const [data] = await pool.execute(sql);
     return data;
   } catch (err) {
     throw new Error(err);
@@ -29,4 +28,34 @@ const saveFile = async (insertId, key, val) => {
   }
 };
 
-module.exports = { saveBoard, saveFile };
+const updateBoard = async (body) => {
+  try {
+    const { title, writer, content, image1, image2, image3, video1, id } = body;
+    let sql = `
+      UPDATE board
+      SET title='${title}', writer='${writer}', content='${content}'
+      WHERE board.id=${id}
+    `;
+    const [data] = await pool.execute(sql);
+    return data;
+  } catch (err) {
+    throw new Error(err);
+  }
+};
+
+const updateFile = async (key, val, id) => {
+  try {
+    let sql = `
+      UPDATE boardfile
+      SET filename=?, originalname=?, mimetype=?, size=?
+      WHERE board_id=? AND fieldname=?
+    `;
+    let values = [val.filename, val.originalname, val.mimetype, val.size, id, val.fieldname];
+    const [data] = await pool.execute(sql, values);
+    return data;
+  } catch (err) {
+    throw new Error(err);
+  }
+};
+
+module.exports = { saveBoard, saveFile, updateBoard, updateFile };
