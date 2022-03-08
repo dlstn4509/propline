@@ -1,4 +1,5 @@
 const { pool } = require('../../modules/mysql-md');
+const moment = require('moment');
 
 const viewBoard = async (id) => {
   try {
@@ -36,8 +37,16 @@ const viewBoard = async (id) => {
     sql = `
       SELECT * FROM boardcomment
       WHERE board_id='${id}' AND status= '1'
+      ORDER BY  IF(ISNULL(parent), id, parent), seq , depth
     `;
+    // sql = `
+    //   SELECT * FROM boardcomment
+    //   WHERE board_id='${id}' AND status= '1'
+    // `;
     const [comment] = await pool.execute(sql);
+    for (let v of comment) {
+      v.createdAt = moment(v.createdAt).format('YYYY-MM-DD HH:mm:ss');
+    }
     data = {
       view: {
         id: views[0].id,
@@ -58,10 +67,10 @@ const viewBoard = async (id) => {
 const saveComment = async (body) => {
   try {
     const { content, writer, id } = body;
-    let sql = `
+    let sql = '';
+    sql = `
       INSERT INTO boardcomment
-      SET content=?, writer=?, board_id=?
-      
+      SET content=?, writer=?, seq='1', board_id=?
     `;
     let values = [content, writer, id];
     const [rs] = await pool.execute(sql, values);
@@ -71,11 +80,11 @@ const saveComment = async (body) => {
   }
 };
 
-const deleteComment = async (id) => {
+const deleteComment = async (id, depth, seq) => {
   try {
     let sql = `
       UPDATE boardcomment SET status = '0'
-      WHERE id='${id}'
+      WHERE id='${id}' AND depth='${depth}' AND seq='${seq}'
     `;
     const rs = await pool.execute(sql);
     return rs;
@@ -84,4 +93,40 @@ const deleteComment = async (id) => {
   }
 };
 
-module.exports = { viewBoard, saveComment, deleteComment };
+const saveReComment = async (content, writer, id, board_id, depth, parent) => {
+  try {
+    let rs = '';
+    let sql = '';
+    if (depth === '1') {
+      sql = `
+        SELECT seq FROM boardcomment
+        WHERE parent='${id}'
+        ORDER BY seq DESC
+        LIMIT 1
+      `;
+      const [[{ seq }]] = await pool.execute(sql);
+      console.log(seq);
+      console.log(typeof seq);
+
+      sql = `
+        INSERT INTO boardcomment
+        SET content=?, writer=?, parent=?, depth=?, seq=?, board_id=?
+      `;
+      const values = [content, writer, id, 2, seq ? seq + 1 : 2, board_id];
+      console.log(values);
+      [rs] = await pool.execute(sql, values);
+    } else {
+      sql = `
+        INSERT INTO boardcomment
+        SET content=?, writer=?, parent=?, depth=?, board_id=?
+      `;
+      const values = [content, writer, parent, Number(depth) + 1, board_id];
+      [rs] = await pool.execute(sql, values);
+    }
+    return rs;
+  } catch (err) {
+    throw new Error(err);
+  }
+};
+
+module.exports = { viewBoard, saveComment, deleteComment, saveReComment };
