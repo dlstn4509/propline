@@ -4,7 +4,7 @@ const shell = require('shelljs');
 module.exports = () => {
   return async (req, res, next) => {
     try {
-      if (req.files) {
+      if (req.files.length) {
         for (let [key, val] of Object.entries(req.files)) {
           if (key.includes('video')) {
             for (let videos of val) {
@@ -39,7 +39,3 @@ module.exports = () => {
     }
   };
 };
-
-// ffmpeg -i D:\NodeWebsite\propline\t1\storages\video\220303\thumb\220303_3174f109-670c-4f42-b029-79ff8cdbd246.avi -c:v copy -c:a copy D:\NodeWebsite\propline\t1\storages\video\220303\thumb\220303_3174f109-670c-4f42-b029-79ff8cdbd246.mp4
-
-// ffmpeg -i D:\NodeWebsite\propline\t1\storages\video\220303\thumb\220303_c516b176-d0c5-4e1d-83a8-8083f2e55097.avi -c:v copy -c:a copy D:\NodeWebsite\propline\t1\storages\video\220303\thumb\220303_c516b176-d0c5-4e1d-83a8-8083f2e55097.mp4

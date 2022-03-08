@@ -5,7 +5,7 @@ const shell = require('shelljs');
 module.exports = () => {
   return async (req, res, next) => {
     try {
-      if (req.files) {
+      if (Object.keys(req.files).includes('video1')) {
         for (let [key, val] of Object.entries(req.files)) {
           if (key.includes('video')) {
             for (let videos of val) {
@@ -36,6 +36,8 @@ module.exports = () => {
             }
           }
         }
+      } else {
+        next();
       }
       // console.log('thumb done');
       // next();

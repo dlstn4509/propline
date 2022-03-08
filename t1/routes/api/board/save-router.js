@@ -14,7 +14,6 @@ router.post(
   sharpInit(),
   ffmpegInit(),
   makeMp4Init(),
-
   async (req, res, next) => {
     try {
       if (req.body._method !== 'PUT') {
@@ -27,9 +26,13 @@ router.post(
             }
           }
         }
-        // res.status(200).json(req.files);
-        // res.status(200).redirect('https://t1.propline.co.kr/board/form');
-        res.status(200).redirect('http://localhost:3000/board');
+        if (data.affectedRows === 1) {
+          // res.status(200).json(data);
+          // res.status(200).redirect('https://t1.propline.co.kr/board/form');
+          res.status(200).redirect('http://localhost:3000/board');
+        } else {
+          next(err);
+        }
       } else {
         const data = await updateBoard(req.body);
         if (req.files && data.affectedRows === 1) {
@@ -40,8 +43,13 @@ router.post(
             }
           }
         }
-        // res.status(200).json(data);
-        res.status(200).redirect('http://localhost:3000/board');
+        if (data.affectedRows === 1) {
+          // res.status(200).json(data);
+          // res.status(200).redirect('https://t1.propline.co.kr/board/form');
+          res.status(200).redirect('http://localhost:3000/board');
+        } else {
+          next(err);
+        }
       }
     } catch (err) {
       res.status(500).json(err);

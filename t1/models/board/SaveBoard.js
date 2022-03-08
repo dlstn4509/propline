@@ -5,7 +5,7 @@ const saveBoard = async (body) => {
     const { title, writer, content, image1, image2, image3, video1 } = body;
     let sql = `
       INSERT INTO board
-      SET title=${title}, writer=${writer}, content=${content}
+      SET title='${title}', writer='${writer}', content='${content}'
     `;
     const [data] = await pool.execute(sql);
     return data;
