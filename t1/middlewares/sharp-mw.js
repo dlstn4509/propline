@@ -1,6 +1,7 @@
 const sharp = require('sharp');
 const path = require('path');
 const { ensureDir } = require('fs-extra');
+const sizeOf = require('image-size');
 
 module.exports = () => {
   return async (req, res, next) => {
@@ -10,16 +11,17 @@ module.exports = () => {
           if (key.includes('image')) {
             for (let image of val) {
               let loc = path.join(image.destination, './thumb');
+              const dimensions = sizeOf(image.path);
               await ensureDir(loc);
               image.thumb = await sharp(image.path)
-                .resize(200)
-                .jpeg({ mozjpeg: true })
                 .composite([
                   {
                     input: './t1/storages/image/thumb.png',
-                    gravity: 'center', // southeast
+                    gravity: 'southeast', // center
                   },
                 ])
+                .resize(500)
+                .jpeg({ mozjpeg: true })
                 .toFile(path.join(loc, image.filename));
             }
           } else {

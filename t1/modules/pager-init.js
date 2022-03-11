@@ -1,4 +1,4 @@
-module.exports = (_page, _totalRecord, _listCnt = 5, _pagerCnt = 3) => {
+module.exports = (_page, _totalRecord, _listCnt = 10, _pagerCnt = 5) => {
   const page = Number(_page);
   const totalRecord = Number(_totalRecord);
   const listCnt = Number(_listCnt);
