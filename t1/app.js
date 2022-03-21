@@ -35,12 +35,14 @@ let paths = [
   '/main',
   '/about',
   '/maps',
+  '/mapsslice',
   '/buildinginfo',
   '/board',
   '/board/:page',
   '/board/form',
   '/board/form/:id',
   '/board/view/:id',
+  '/test',
 ];
 app.get(paths, function (req, res, next) {
   res.sendFile(path.join(__dirname, './public', 'index.html'));

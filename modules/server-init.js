@@ -1,6 +1,6 @@
 module.exports = (app, server) => {
-  app.listen(80, () => {
-    console.log('80 server start');
+  app.listen(process.env.PORT, () => {
+    console.log(process.env.PORT + ' server start');
   });
   server.listen(443, () => {
     console.log('443 server start');
