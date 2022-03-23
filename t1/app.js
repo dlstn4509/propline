@@ -21,29 +21,17 @@ app.use(cors());
 app.use(method());
 
 /*************** router init **************/
-const apiMapRouter = require('./routes/api/map');
-const apiBuildingRouter = require('./routes/api/buildingInfo');
-const apiBoardRouter = require('./routes/api/board');
+// const apiMapRouter = require('./routes/api/map');
+// const apiBuildingRouter = require('./routes/api/buildingInfo');
+// const apiBoardRouter = require('./routes/api/board');
 // const apiTestRouter = require('./routes/api/test');
-app.use('/api/map', apiMapRouter);
-app.use('/api/buildinginfo', apiBuildingRouter);
-app.use('/api/board', apiBoardRouter);
+// app.use('/api/map', apiMapRouter);
+// app.use('/api/buildinginfo', apiBuildingRouter);
+// app.use('/api/board', apiBoardRouter);
 // app.use('/api/test', apiTestRouter);
 
 /*************** vue init **************/
-let paths = [
-  '/main',
-  '/about',
-  '/maps',
-  '/mapsslice',
-  '/buildinginfo',
-  '/board',
-  '/board/:page',
-  '/board/form',
-  '/board/form/:id',
-  '/board/view/:id',
-  '/test',
-];
+let paths = ['/main', '/login', '/signup', '/mapsslice', '/businesssignup', '/normalsignup'];
 app.get(paths, function (req, res, next) {
   res.sendFile(path.join(__dirname, './public', 'index.html'));
 });
