@@ -29,6 +29,8 @@ app.use(method());
 // app.use('/api/buildinginfo', apiBuildingRouter);
 // app.use('/api/board', apiBoardRouter);
 // app.use('/api/test', apiTestRouter);
+const signUpRouter = require('./routes/api/signup');
+app.use('/api/signup', signUpRouter);
 
 /*************** vue init **************/
 let paths = ['/main', '/login', '/signup', '/mapsslice', '/businesssignup', '/normalsignup'];
