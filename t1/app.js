@@ -31,9 +31,11 @@ app.use(method());
 // app.use('/api/test', apiTestRouter);
 const signUpRouter = require('./routes/api/signup');
 app.use('/api/signup', signUpRouter);
+const loginRouter = require('./routes/api/login');
+app.use('/api/login', loginRouter);
 
 /*************** vue init **************/
-let paths = ['/main', '/login', '/signup', '/mapsslice', '/businesssignup', '/normalsignup'];
+let paths = ['/main', '/login', '/signup', '/businesssignup', '/normalsignup'];
 app.get(paths, function (req, res, next) {
   res.sendFile(path.join(__dirname, './public', 'index.html'));
 });

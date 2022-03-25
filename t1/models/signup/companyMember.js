@@ -1,7 +1,22 @@
 const axios = require('axios');
 const { pool } = require('../../modules/mysql-md');
+const bcrypt = require('bcrypt');
+
+const isIdDuplication = async (id) => {
+  try {
+    let sql = `
+      SELECT member_id FROM m001_member
+      WHERE member_id='${id}'
+    `;
+    const [[rs]] = await pool.execute(sql);
+    return rs ? { success: true } : { success: false };
+  } catch (err) {
+    throw new Error(err);
+  }
+};
 
 const saveCompanyMember = async (body, cidx) => {
+  let { BCRYPT_SALT: salt, BCRYPT_ROUND: round } = process.env;
   let sql = '';
   try {
     let {
@@ -24,6 +39,7 @@ const saveCompanyMember = async (body, cidx) => {
 
     let phone = phone01 + phone02 + phone03;
     let email = email01 + '@' + email02;
+    let hashPasswd = await bcrypt.hash(member_pw + salt, Number(round));
 
     sql = `
       SELECT midx AS lastMidx FROM m001_member
@@ -39,7 +55,7 @@ const saveCompanyMember = async (body, cidx) => {
     let values = [
       cidx,
       member_id,
-      member_pw,
+      hashPasswd,
       member_name,
       phone,
       mobile_company,
@@ -56,9 +72,8 @@ const saveCompanyMember = async (body, cidx) => {
     const data = await pool.execute(sql, values);
     return data;
   } catch (err) {
-    console.log(err);
     throw new Error(err);
   }
 };
 
-module.exports = { saveCompanyMember };
+module.exports = { saveCompanyMember, isIdDuplication };
