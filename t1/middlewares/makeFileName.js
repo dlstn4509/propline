@@ -3,9 +3,9 @@ const makeFileName = async (files) => {
     let fileObj = {};
     for (let [key, [val]] of Object.entries(files)) {
       if (key === 'registration_no_file') {
-        fileObj.registration_no_file = val.filename;
+        fileObj.registration_no_file = val.key;
       } else if (key === 'company_no_file') {
-        fileObj.company_no_file = val.filename;
+        fileObj.company_no_file = val.key;
       }
     }
     return fileObj;

@@ -35,7 +35,7 @@ const loginRouter = require('./routes/api/login');
 app.use('/api/login', loginRouter);
 
 /*************** vue init **************/
-let paths = ['/main', '/login', '/signup', '/businesssignup', '/normalsignup'];
+let paths = ['/main', '/login', '/signup', '/businesssignup', '/normalsignup', '/item'];
 app.get(paths, function (req, res, next) {
   res.sendFile(path.join(__dirname, './public', 'index.html'));
 });
