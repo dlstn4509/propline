@@ -47,6 +47,7 @@ const t1 = require('./t1/app');
 app.use(vhost('t1.propline.co.kr', t1)); // http도 접속 허용
 server.use('t1.propline.co.kr', options.t1Key, t1);
 
+app.use('http://localhost:3000', t1); // http도 접속 허용
 /*************** t2 **************/
 // const t2 = require('./t2/app');
 // app.use(vhost('t2.propline.co.kr', t2));

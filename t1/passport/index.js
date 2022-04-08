@@ -1,7 +1,7 @@
 const local = require('./local-strategy');
 // const kakao = require('./kakao-strategy');
 // const naver = require('./naver-strategy');
-const { findUser } = require('../models/login/login');
+const { findUser } = require('../models/login/Login');
 
 const serialize = (user, done) => {
   // 카카오, 네이버 등등 공통사항 (최초 로그인)

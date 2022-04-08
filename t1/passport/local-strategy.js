@@ -1,5 +1,5 @@
 const LocalStrategy = require('passport-local').Strategy;
-const { login, updateLoginIp } = require('../models/login/login');
+const { login, updateLoginIp } = require('../models/login/Login');
 
 const cb = async (req, member_id, member_pw, done) => {
   try {

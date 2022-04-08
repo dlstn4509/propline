@@ -14,6 +14,7 @@ const expressSession = session({
   cookie: {
     secure: false,
     httpOnly: true,
+    // maxAge: 60 * 60 * 1000,
   },
 });
 

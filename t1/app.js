@@ -47,6 +47,8 @@ const loginRouter = require('./routes/api/login');
 app.use('/api/login', loginRouter);
 const findItemRouter = require('./routes/api/findItem');
 app.use('/api/finditem', findItemRouter);
+const logOutRouter = require('./routes/api/logout');
+app.use('/api/logout', logOutRouter);
 
 /*************** vue init **************/
 let paths = [

@@ -8,7 +8,7 @@ const saveFindItem = async (body) => {
       SET midx=?, item_type=?, trade_type=?, company_type=?, user_name=?, phone=?, mobile=?, title=?, contents=?, reg_midx=?, mod_midx=?
     `;
     let values = [
-      1011,
+      midx,
       item_type,
       trade_type,
       company_type,
@@ -17,8 +17,8 @@ const saveFindItem = async (body) => {
       mobile,
       title,
       contents,
-      1011,
-      1011,
+      midx,
+      midx,
     ];
     const [rs] = await pool.execute(sql, values);
     return rs.affectedRows === 1 ? { success: true } : { success: false };
