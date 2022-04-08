@@ -1,17 +1,22 @@
 const path = require('path');
 const express = require('express');
 const router = express.Router();
-const createError = require('http-errors');
-const { login } = require('../../../models/login/login');
+const passport = require('passport');
 
-router.get('/', async (req, res, next) => {
-  try {
-    const data = await login(req.query);
-    res.status(200).json(data);
-    // res.status(200).redirect('https://t1.propline.co.kr/main');
-  } catch (err) {
-    res.status(500).json(err);
-  }
+router.post('/', async (req, res, next) => {
+  const done = (err, user, msg) => {
+    if (err) return next(err);
+    else if (!user) return res.send(msg);
+    else {
+      req.logIn(user, (err) => {
+        if (err) return next(err);
+        else {
+          return res.json(user);
+        }
+      });
+    }
+  };
+  passport.authenticate('local', done)(req, res, next);
 });
 
 module.exports = { name: '/', router };

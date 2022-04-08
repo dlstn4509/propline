@@ -1,9 +1,13 @@
+require('dotenv').config();
 const express = require('express');
 const app = express();
 const path = require('path');
 const cors = require('cors');
 const method = require('./middlewares/method-mw');
-require('dotenv').config();
+
+const session = require('./middlewares/session-mw');
+const passport = require('passport');
+const passportModule = require('./passport');
 
 /*************** static init **************/
 app.use('/', express.static(path.join(__dirname, 'public')));
@@ -19,6 +23,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 app.use(method());
+app.use(session(app));
+
+/**************** passport ****************/ // 패스포트 세팅 무조건 넣음
+passportModule(passport);
+app.use(passport.initialize());
+app.use(passport.session());
 
 /*************** router init **************/
 // const apiMapRouter = require('./routes/api/map');
@@ -29,14 +39,49 @@ app.use(method());
 // app.use('/api/buildinginfo', apiBuildingRouter);
 // app.use('/api/board', apiBoardRouter);
 // app.use('/api/test', apiTestRouter);
+const isUserRouter = require('./routes/api/isuser');
+app.use('/api/isuser', isUserRouter);
 const signUpRouter = require('./routes/api/signup');
 app.use('/api/signup', signUpRouter);
 const loginRouter = require('./routes/api/login');
 app.use('/api/login', loginRouter);
+const findItemRouter = require('./routes/api/findItem');
+app.use('/api/finditem', findItemRouter);
 
 /*************** vue init **************/
-let paths = ['/main', '/login', '/signup', '/businesssignup', '/normalsignup', '/item'];
-app.get(paths, function (req, res, next) {
+let paths = [
+  '/main',
+  '/login',
+  '/signup',
+  '/businesssignup',
+  '/normalsignup',
+  '/item',
+  '/itempublic',
+  '/saleinfo',
+  '/finditem',
+  '/finditemform',
+  '/saleitem',
+  '/request',
+  '/freeboard',
+  '/knowhow',
+  '/recruit',
+  '/consult',
+  '/direct',
+  '/notice',
+  '/question',
+  '/requestboard',
+  '/inquiry',
+  '/event',
+  '/serviceintro',
+  '/charge',
+  '/mobileapp',
+  '/card',
+  '/extra',
+  '/gpoint',
+  '/paymenthistory',
+  '/requestsale',
+];
+app.get(paths, (req, res, next) => {
   res.sendFile(path.join(__dirname, './public', 'index.html'));
 });
 
