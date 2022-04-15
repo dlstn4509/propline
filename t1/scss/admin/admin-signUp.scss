@@ -1,0 +1,72 @@
+@import '../common';
+
+.signUp-wrapper {
+  @include flex;
+  text-align: center;
+  padding-top: 20px;
+  .signUp-wrap {
+    width: 400px;
+    text-align: left;
+    .img-wrap {
+      margin-bottom: 30px;
+      padding: 20px 20px 0 20px;
+      width: 100%;
+      text-align: center;
+      img {
+        width: 200px;
+      }
+    }
+    .sub-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 4px;
+      span {
+        color: red;
+        margin-right: 4px;
+      }
+    }
+    .input {
+      width: 100%;
+      height: 40px;
+      border: solid 1px #dadada;
+      padding: 10px 14px;
+      margin-bottom: 10px;
+      border-radius: 4px;
+      font-size: 12px;
+      &.active {
+        border: 2px solid red;
+        &:focus {
+          border: 2px solid red;
+        }
+      }
+      &:focus {
+        border: 2px solid #000;
+      }
+    }
+    .main-select {
+      width: 31%;
+      height: 40px;
+      border: solid 1px #dadada;
+      font-size: 14px;
+      padding-left: 10px;
+      border-radius: 4px;
+      &:focus {
+        border: 2px solid #000;
+      }
+    }
+    .btn-wrap {
+      @include flex;
+      width: 100%;
+      margin-top: 60px;
+      margin-bottom: 100px;
+    }
+    .sub-info {
+      font-size: 12px;
+      margin-top: -10px;
+      margin-bottom: 10px;
+      &.active {
+        color: red;
+      }
+    }
+  }
+}

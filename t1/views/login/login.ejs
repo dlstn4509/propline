@@ -1,3 +1,21 @@
 <%- include('../inc/head.ejs') %>
-  <div class="login">log</div>
+<div class="login-wrapper">
+  <div class="login-wrap">
+    <div class="logo-wrap"><img src="/admin/img/top_logo.svg" class="w100" alt="" /></div>
+    <div class="ip-wrap"></div>
+    <form action="">
+      <input type="text" placeholder="아이디" />
+      <input type="password" placeholder="비밀번호" />
+      <button style="background-color: #3d5afe" class="button">로그인</button>
+      <a href="/admin/signup" style="background-color: #999999" class="button">회원가입</a>
+    </form>
+  </div>
+</div>
+<script>
+  let ipWrap = document.querySelector('.ip-wrap');
+  axios
+    .get('https://api.ipify.org?format=json')
+    .then((r) => (ipWrap.innerText = 'IP : ' + r.data.ip))
+    .catch((err) => console.log(err));
+</script>
 <%- include('../inc/foot.ejs') %>

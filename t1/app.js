@@ -50,8 +50,10 @@ app.use('/api/finditem', findItemRouter);
 const logOutRouter = require('./routes/api/logout');
 app.use('/api/logout', logOutRouter);
 
-const adminRouter = require('./routes/admin/login');
-app.use('/admin/login', adminRouter);
+const adminLoginRouter = require('./routes/admin/login');
+app.use('/admin/login', adminLoginRouter);
+const adminSignUpRouter = require('./routes/admin/signUp');
+app.use('/admin/signup', adminSignUpRouter);
 
 /*************** vue init **************/
 let paths = [
