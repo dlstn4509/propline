@@ -50,6 +50,9 @@ app.use('/api/finditem', findItemRouter);
 const logOutRouter = require('./routes/api/logout');
 app.use('/api/logout', logOutRouter);
 
+const adminRouter = require('./routes/admin/login');
+app.use('/admin/login', adminRouter);
+
 /*************** vue init **************/
 let paths = [
   '/main',
@@ -61,7 +64,6 @@ let paths = [
   '/itempublic',
   '/saleinfo',
   '/finditem',
-  '/finditemform',
   '/saleitem',
   '/request',
   '/freeboard',
@@ -82,6 +84,7 @@ let paths = [
   '/gpoint',
   '/paymenthistory',
   '/requestsale',
+  '/manual',
 ];
 app.get(paths, (req, res, next) => {
   res.sendFile(path.join(__dirname, './public', 'index.html'));
