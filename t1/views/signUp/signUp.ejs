@@ -3,24 +3,24 @@
 <div class="signUp-wrapper">
   <div class="signUp-wrap">
     <div class="img-wrap"><img src="/admin/img/top_logo.svg" alt="" /></div>
-    <form action="">
+    <form action="/admin/signUp" method="POST" id="signUpForm">
       <div class="sub-title"><span>*</span>아이디</div>
-      <input type="text" id="id" class="input" />
+      <input type="text" id="id" class="input" name="member_id" />
       <div class="sub-info">영문, 숫자 조합 / 4자 ~ 12자 (변경불가)</div>
 
       <div class="sub-title"><span>*</span>비밀번호</div>
-      <input type="password" class="input" id="password01" />
+      <input type="password" class="input" id="password01" name="member_pw" />
       <div class="sub-info">영문, 숫자 조합 / 4자 ~ 12자</div>
 
       <div class="sub-title"><span>*</span>비밀번호 확인</div>
-      <input type="password" class="input" id="password02" />
+      <input type="password" class="input" id="password02" name="member_pw02" />
       <div class="sub-info">영문, 숫자 조합 / 4자 ~ 12자</div>
 
       <div class="sub-title"><span>*</span>이름</div>
-      <input type="text" class="input" />
+      <input type="text" class="input" name="member_name" />
 
       <div class="sub-title"><span>*</span>자택전화</div>
-      <select class="main-select" name="" id="">
+      <select class="main-select" name="phone01">
         <option value="02">02</option>
         <option value="031">031</option>
         <option value="032">032</option>
@@ -39,11 +39,11 @@
         <option value="064">064</option>
         <option value="070">070</option>
       </select>
-      - <input type="text" class="input tel-input" style="width: 31%" /> -
-      <input type="text" class="input tel-input" style="width: 31%" />
+      - <input type="text" class="input tel-input" style="width: 31%" name="phone02" maxlength="4" /> -
+      <input type="text" class="input tel-input" style="width: 31%" name="phone03" maxlength="4" />
 
       <div class="sub-title"><span>*</span>핸드폰</div>
-      <select class="main-select" name="" id="">
+      <select class="main-select" name="mobile01">
         <option value="010">010</option>
         <option value="011">011</option>
         <option value="016">016</option>
@@ -51,12 +51,12 @@
         <option value="018">018</option>
         <option value="019">019</option>
       </select>
-      - <input type="text" class="input tel-input" style="width: 31%" /> -
-      <input type="text" class="input tel-input" style="width: 31%" />
+      - <input type="text" class="input tel-input" style="width: 31%" name="mobile02" maxlength="4" /> -
+      <input type="text" class="input tel-input" style="width: 31%" name="mobile03" maxlength="4" />
 
       <div class="sub-title"><span>*</span>이메일</div>
-      <input type="text" class="input" style="width: 31%" /> @
-      <input type="text" class="input" id="mail" style="width: 31%" value="" />
+      <input type="text" class="input" style="width: 31%" name="email01" /> @
+      <input type="text" class="input" id="mail" style="width: 31%" value="" name="email02" />
       <select class="main-select" name="" id="mailSelect" onchange="changeSelect()">
         <option value="">-- 직접입력 --</option>
         <option value="hanmail.net">hanmail.net</option>
@@ -88,7 +88,9 @@
       <input type="text" id="roadAddress" class="input" placeholder="도로명 주소" readonly />
       <input type="text" class="input" placeholder="상세 주소" />
       <div class="btn-wrap">
-        <button class="btn btn-primary" style="margin-right: 10px">회원가입</button>
+        <button type="button" class="btn btn-primary" style="margin-right: 10px" onclick="formSubmit()">
+          회원가입
+        </button>
         <a href="/admin/login" class="btn btn-danger">취소</a>
       </div>
     </form>

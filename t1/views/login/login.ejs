@@ -3,19 +3,44 @@
   <div class="login-wrap">
     <div class="logo-wrap"><img src="/admin/img/top_logo.svg" class="w100" alt="" /></div>
     <div class="ip-wrap"></div>
+    <div><%= user.id %></div>
     <form action="">
-      <input type="text" placeholder="아이디" />
-      <input type="password" placeholder="비밀번호" />
-      <button style="background-color: #3d5afe" class="button">로그인</button>
+      <input type="text" id="member_id" placeholder="아이디" />
+      <input type="password" id="member_pw" placeholder="비밀번호" />
+      <button type="button" style="background-color: #3d5afe" class="button" onclick="login()">로그인</button>
       <a href="/admin/signup" style="background-color: #999999" class="button">회원가입</a>
     </form>
   </div>
 </div>
 <script>
   let ipWrap = document.querySelector('.ip-wrap');
+  let loginIp = '';
   axios
     .get('https://api.ipify.org?format=json')
-    .then((r) => (ipWrap.innerText = 'IP : ' + r.data.ip))
+    .then((r) => {
+      ipWrap.innerText = 'IP : ' + r.data.ip;
+      loginIp = r.data.ip;
+    })
     .catch((err) => console.log(err));
+
+  const login = () => {
+    axios({
+      method: 'post',
+      url: '/api/login',
+      data: {
+        member_id: document.querySelector('#member_id').value,
+        member_pw: document.querySelector('#member_pw').value,
+        loginIp: loginIp,
+      },
+    })
+      .then((r) => {
+        if (r.data === '아이디와 패스워드를 확인하세요.') {
+          alert(r.data);
+        } else {
+          console.log(user);
+        }
+      })
+      .catch((err) => console.log(err));
+  };
 </script>
 <%- include('../inc/foot.ejs') %>

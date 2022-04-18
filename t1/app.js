@@ -4,6 +4,7 @@ const app = express();
 const path = require('path');
 const cors = require('cors');
 const method = require('./middlewares/method-mw');
+const locals = require('./middlewares/locals-mw');
 
 const session = require('./middlewares/session-mw');
 const passport = require('passport');
@@ -29,6 +30,9 @@ app.use(session(app));
 passportModule(passport);
 app.use(passport.initialize());
 app.use(passport.session());
+
+/***************** locals *****************/
+app.use(locals);
 
 /*************** router init **************/
 // const apiMapRouter = require('./routes/api/map');
