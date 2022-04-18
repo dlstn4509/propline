@@ -49,6 +49,8 @@ const findItemRouter = require('./routes/api/findItem');
 app.use('/api/finditem', findItemRouter);
 const logOutRouter = require('./routes/api/logout');
 app.use('/api/logout', logOutRouter);
+const requestSaleRouter = require('./routes/api/requestSale');
+app.use('/api/requestsale', requestSaleRouter);
 
 const adminLoginRouter = require('./routes/admin/login');
 app.use('/admin/login', adminLoginRouter);
