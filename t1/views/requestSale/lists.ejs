@@ -1,0 +1,49 @@
+<%- include('../inc/head.ejs') %> <%- include('../inc/nav.ejs') %>
+<div class="container-wrapper">
+  <div class="title">매물의뢰(<%= totalRecord %>)</div>
+  <div class="total-count">총 <span class="count-span"><%= totalRecord %></span> 건</div>
+  <div class="table-wrap-list">
+    <table class="table-bordered table-secondary">
+      <thead>
+        <tr>
+          <th style="width: 7%">의뢰종류</th>
+          <th style="width: 7%">매물종류</th>
+          <th style="width: 25%">매물주소</th>
+          <th style="width: 10%">의뢰인</th>
+          <th style="width: 6%">진행상태</th>
+          <th>관리자메모</th>
+          <th style="width: 6%">등록일</th>
+          <th style="width: 6%">수정일</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for(let list of lists) { %>
+        <tr onclick="clickList(this)" data-idx="<%= list.idx %>">
+          <td>의뢰종류 / <%= list.idx %></td>
+          <td><%= list.item_kind %></td>
+          <td>
+            <div><%= list.sido %> <%= list.sigungu %> <%= list.eupmyeondong %></div>
+            <div><%= list.land_no_m %>-<%= list.land_no_s %> <%= list.detail_address %></div>
+          </td>
+          <td>
+            <div><%= list.user_name %>(<%= list.user_kind %>)</div>
+            <div><%= list.phone %></div>
+          </td>
+          <td><%= list.record_state %></td>
+          <td><%= list.memo %></td>
+          <td><%= list.reg_date %></td>
+          <td><%= list.mod_date %></td>
+        </tr>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+  <%- include('../inc/pager', pager ) %>
+</div>
+<%- include('../inc/foot.ejs') %>
+<script>
+  const clickList = (el) => {
+    let idx = el.dataset.idx;
+    window.location = `/admin/requestsale?view=${idx}`;
+  };
+</script>

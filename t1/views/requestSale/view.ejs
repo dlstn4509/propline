@@ -1,0 +1,107 @@
+<%- include('../inc/head.ejs') %>
+  <%- include('../inc/nav.ejs') %>
+  <div class="container-wrapper">
+    <div class="title">매물의뢰</div>
+    <form action="/admin/requestsale" method="POST" name="updateForm">
+      <input type="hidden" name="_method" value="PUT" />
+      <input type="hidden" name="idx" value="<%= list.idx %>" />
+      <input type="hidden" name="midx" value="<%= user.midx %>" />
+      <table class="table-wrap-view table-bordered">
+        <tbody>
+          <tr>
+            <td class="sub-title">등록일</td>
+            <td><%= list.reg_date %></td>
+            <td class="sub-title">수정일</td>
+            <td><%= list.mod_date %> (<%= list.member_name %>)</td>
+          </tr>
+          <tr>
+            <td class="sub-title">의뢰종류</td>
+            <td>의뢰종류</td>
+            <td class="sub-title">중개수수료</td>
+            <td><%= list.commission %></td>
+          </tr>
+          <tr>
+            <td class="sub-title">매물종류</td>
+            <td colspan="3"><%= list.item_kind %></td>
+          </tr>
+          <tr>
+            <td class="sub-title">매물주소</td>
+            <td colspan="3">
+              <%= list.sido %> <%= list.sigungu %> <%= list.eupmyeondong %> <%= list.land_no_m %>-<%=
+              list.land_no_s %> <%= list.detail_address %>
+            </td>
+          </tr>
+          <tr>
+            <td class="sub-title">전달사항</td>
+            <td style="white-space: pre-wrap" colspan="3"><%= list.memo %></td>
+          </tr>
+          <tr>
+            <td class="sub-title">사진</td>
+            <td colspan="3"></td>
+          </tr>
+          <tr>
+            <td class="sub-title">네이버부동산 광고요청</td>
+            <td colspan="3"><%= list.is_want_naverad %></td>
+          </tr>
+          <tr>
+            <td class="sub-title">의뢰인명</td>
+            <td><%= list.user_name %>(<%= list.user_kind %>)</td>
+            <td class="sub-title">의뢰인 연락처</td>
+            <td><%= list.phone %></td>
+          </tr>
+          <tr>
+            <td class="sub-title">진행상태</td>
+            <td colspan="3">
+              <div style="display: flex; align-items: center">
+                <input type="radio" name="record_type" id="record_type" value="ready" <%= list.record_state
+                === 0 ? 'checked' : '' %> />
+                <span>대기중</span>
+                <input type="radio" name="record_type" id="record_type" value="complete" <%= list.record_state
+                !== 0 ? 'checked' : '' %> />
+                <span>완료</span>
+                <select name="record_state" class="select">
+                  <option value="">선택</option>
+                  <option <%= list.record_state === 1 ? 'selected' : '' %> value="1">결번</option>
+                  <option <%= list.record_state === 2 ? 'selected' : '' %> value="2">부재중</option>
+                  <option <%= list.record_state === 3 ? 'selected' : '' %> value="3">통화거부</option>
+                  <option <%= list.record_state === 4 ? 'selected' : '' %> value="4">신규(공실)</option>
+                  <option <%= list.record_state === 5 ? 'selected' : '' %> value="5">기존매물</option>
+                </select>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td style="white-space: pre-wrap" class="sub-title">관리자메모</td>
+            <td colspan="3">
+              <textarea name="admin_memo" cols="30" rows="10"><%= list.admin_memo %></textarea>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="btn-wrap">
+        <button type="button" class="btn btn-primary" onclick="updateSubmit()">수정</button>
+        <a href="javascript: history.go(-1);" class="btn btn-success" style="color: #fff">목록</a>
+        <button type="button" class="btn btn-danger" onclick="deleteListBtn()">삭제</button>
+      </div>
+    </form>
+  </div>
+<script>
+  const updateSubmit = () => {
+    let record_typeVal = updateForm.record_type.value;
+    let record_stateVal = updateForm.record_state.value;
+    if ((record_typeVal === 'complete' && record_stateVal) || record_typeVal === 'ready') {
+      updateForm.submit();
+    } else {
+      alert('진행상태를 확인해 주세요.');
+    }
+  };
+  document.querySelectorAll('#record_type').forEach((v) =>
+    v.addEventListener('change', () => {
+      updateForm.record_state.value = '';
+    })
+  );
+  const deleteListBtn = () => {
+    console.log(updateForm.idx.value)
+  }
+</script>
+<%- include('../inc/foot.ejs') %>

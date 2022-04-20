@@ -29,7 +29,7 @@ router.post(
         if (data.affectedRows === 1) {
           // res.status(200).json(data);
           // res.status(200).redirect('https://t1.propline.co.kr/board/form');
-          res.status(200).redirect('http://localhost:3000/board');
+          res.status(200).redirect('/board');
         } else {
           next(err);
         }

@@ -54,7 +54,7 @@ const requestSale = async (body) => {
       values.push(
         newCommission,
         land_no_m,
-        land_no_s,
+        land_no_s ? land_no_s : 0,
         is_mountain,
         detail_address,
         user_kind,

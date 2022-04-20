@@ -6,6 +6,7 @@ const cors = require('cors');
 const method = require('./middlewares/method-mw');
 
 const session = require('./middlewares/session-mw');
+const locals = require('./middlewares/locals-mw');
 const passport = require('passport');
 const passportModule = require('./passport');
 
@@ -29,6 +30,9 @@ app.use(session(app));
 passportModule(passport);
 app.use(passport.initialize());
 app.use(passport.session());
+
+/***************** locals *****************/
+app.use(locals);
 
 /*************** router init **************/
 // const apiMapRouter = require('./routes/api/map');
@@ -58,6 +62,8 @@ const adminSignUpRouter = require('./routes/admin/signUp');
 app.use('/admin/signup', adminSignUpRouter);
 const adminMainRouter = require('./routes/admin/main');
 app.use('/admin/main', adminMainRouter);
+const adminRequestSaleRouter = require('./routes/admin/requestSale');
+app.use('/admin/requestsale', adminRequestSaleRouter);
 
 /*************** vue init **************/
 let paths = [

@@ -7,10 +7,9 @@ const { requestSale } = require('../../../models/requestSale/RequestSale');
 
 router.post('/', uploader.fields([{ name: 'file' }]), async (req, res, next) => {
   try {
-    // console.log(req.files);
     const [rs] = await requestSale(req.body);
-    // res.json(req.body);
-    rs.affectedRows === 1 ? res.status(200).redirect('http://localhost:3000/requestsale') : next(err);
+    rs.affectedRows === 1 ? res.status(200).redirect('/admin/requestsale') : next(err);
+    // res.json(rs);
   } catch (err) {
     res.status(500).json(err);
   }
