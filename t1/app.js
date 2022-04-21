@@ -3,10 +3,11 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const cors = require('cors');
-const method = require('./middlewares/method-mw');
 
+const method = require('./middlewares/method-mw');
 const session = require('./middlewares/session-mw');
 const locals = require('./middlewares/locals-mw');
+const navCount = require('./middlewares/navCount-mw');
 const passport = require('passport');
 const passportModule = require('./passport');
 
@@ -33,6 +34,8 @@ app.use(passport.session());
 
 /***************** locals *****************/
 app.use(locals);
+
+app.use(navCount);
 
 /*************** router init **************/
 // const apiMapRouter = require('./routes/api/map');

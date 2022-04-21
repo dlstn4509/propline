@@ -10,10 +10,20 @@
     display: flex;
     justify-content: center;
   }
+  .nav-wrapper .nav .active {
+    color: red;
+  }
   .nav-wrapper .nav a {
     color: #000;
   }
 </style>
 <div class="nav-wrapper">
-  <div class="nav"><a href="/admin/requestsale">(신) 매물의뢰</a></div>
+  <div class="nav">
+    <a href="/admin/main">메인</a>
+  </div>
+  <div class="nav">
+    <a class="<%= requestsale > 0 ? 'active' : '' %>" href="/admin/requestsale"
+      >(신) 매물의뢰 <%= requestsale > 0 ? requestsale : '' %></a
+    >
+  </div>
 </div>

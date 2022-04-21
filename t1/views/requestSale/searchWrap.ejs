@@ -1,0 +1,169 @@
+<div class="search-wrapper">
+  <form name="searchForm">
+    <div style="display: flex; margin-bottom: 20px">
+      <div class="search-wrap">
+        <div class="sub-title">매물종류</div>
+        <div>
+          <select name="item_kind">
+            <option value="">선택</option>
+            <option value="원룸">원룸</option>
+            <option value="다가구">다가구</option>
+            <option value="다세대">다세대</option>
+            <option value="사무실">사무실</option>
+            <option value="상가">상가</option>
+            <option value="아파트">아파트</option>
+            <option value="오피스텔">오피스텔</option>
+            <option value="건물">건물</option>
+            <option value="토지">토지</option>
+            <option value="기타">기타</option>
+          </select>
+        </div>
+      </div>
+      <div class="search-wrap">
+        <div class="sub-title">기간선택</div>
+        <div>
+          <select name="dateType">
+            <option value="reg_date">등록일</option>
+            <option value="mod_date">수정일</option>
+          </select>
+        </div>
+        <div><input type="date" style="width: 110px" name="startDate" /></div>
+        <div style="margin-right: 4px">~</div>
+        <div>
+          <input type="date" style="width: 110px" name="finishDate" />
+        </div>
+      </div>
+      <div class="search-wrap">
+        <div class="sub-title">진행상태</div>
+        <div>
+          <select name="record_state">
+            <option value="">선택</option>
+            <option value="0">대기</option>
+            <option value="1">완료</option>
+            <option value="2">완료-결번</option>
+            <option value="3">완료-부재중</option>
+            <option value="4">완료-통화거부</option>
+            <option value="5">완료-신규(공실)</option>
+            <option value="6">완료-기존매물</option>
+          </select>
+        </div>
+      </div>
+      <div class="search-wrap">
+        <div class="sub-title">통합검색</div>
+        <div>
+          <select name="searchMode">
+            <option value="">선택</option>
+            <option value="user_name">의뢰인명</option>
+            <option value="user_phone">의뢰인 연락처</option>
+            <option value="memo">전달사항</option>
+            <option value="admin_memo">관리자메모</option>
+          </select>
+        </div>
+        <div><input type="text" name="searchModeValue" /></div>
+      </div>
+      <div class="search-wrap">
+        <div class="sub-title">관리자</div>
+        <div>
+          <select name="admin">
+            <option value="">선택</option>
+            <option value="최인수d">최인수d</option>
+            <option value="강혜정">강혜정</option>
+            <option value="김유진">김유진</option>
+            <option value="정지혜">정지혜</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div style="display: flex">
+      <div class="search-wrap">
+        <div class="sub-title">지역</div>
+        <div>
+          <select name="sido">
+            <option value="">시/도</option>
+            <option value="강원">강원</option>
+            <option value="경기">경기</option>
+            <option value="경남">경남</option>
+            <option value="경북">경북</option>
+            <option value="광주">광주</option>
+            <option value="대구">대구</option>
+            <option value="대전">대전</option>
+            <option value="부산">부산</option>
+            <option value="서울" selected>서울</option>
+            <option value="세종">세종</option>
+            <option value="울산">울산</option>
+            <option value="인천">인천</option>
+            <option value="전남">전남</option>
+            <option value="전북">전북</option>
+            <option value="제주">제주</option>
+            <option value="충남">충남</option>
+            <option value="충북">충북</option>
+          </select>
+        </div>
+        <div>
+          <select name="sigungu">
+            <option value="">시/군/구</option>
+            <option value="강남구" selected>강남구</option>
+            <option value="강동구">강동구</option>
+            <option value="강북구">강북구</option>
+            <option value="강서구">강서구</option>
+            <option value="관악구">관악구</option>
+            <option value="광진구">광진구</option>
+            <option value="구로구">구로구</option>
+            <option value="금천구">금천구</option>
+            <option value="노원구">노원구</option>
+            <option value="도봉구">도봉구</option>
+            <option value="동대문구">동대문구</option>
+            <option value="동작구">동작구</option>
+            <option value="마포구">마포구</option>
+            <option value="서대문구">서대문구</option>
+            <option value="서초구">서초구</option>
+            <option value="성동구">성동구</option>
+            <option value="성북구">성북구</option>
+            <option value="송파구">송파구</option>
+            <option value="양천구">양천구</option>
+            <option value="영등포구">영등포구</option>
+            <option value="용산구">용산구</option>
+            <option value="은평구">은평구</option>
+            <option value="종로구">종로구</option>
+            <option value="중구">중구</option>
+            <option value="중랑구">중랑구</option>
+          </select>
+        </div>
+        <div>
+          <select name="eupmyeondong">
+            <option value="">읍/면/동</option>
+            <option value="개포동">개포동</option>
+            <option value="논현동">논현동</option>
+            <option value="대치동">대치동</option>
+            <option value="도곡동">도곡동</option>
+            <option value="삼성동">삼성동</option>
+            <option value="세곡동">세곡동</option>
+            <option value="수서동">수서동</option>
+            <option value="신사동">신사동</option>
+            <option value="압구정동" selected>압구정동</option>
+            <option value="역삼동">역삼동</option>
+            <option value="율현동">율현동</option>
+            <option value="일원동">일원동</option>
+            <option value="자곡동">자곡동</option>
+            <option value="청담동">청담동</option>
+          </select>
+        </div>
+        <div>
+          <input type="text" name="detail_address" placeholder="상세주소" />
+        </div>
+      </div>
+      <div class="search-wrap">
+        <div class="sub-title">의뢰종류</div>
+        <select name="request_type">
+          <option value="">선택</option>
+          <option value="부동산 내놓기">부동산 내놓기</option>
+          <option value="매물 내놓기">매물 내놓기</option>
+        </select>
+      </div>
+      <div class="btn-wrap">
+        <button type="button" onclick="searchBtn()" class="btn btn-primary">검색</button>
+        <a href="/admin/requestsale" class="btn btn-danger" style="color: #fff">초기화</a>
+      </div>
+    </div>
+  </form>
+</div>

@@ -85,23 +85,4 @@
       </div>
     </form>
   </div>
-<script>
-  const updateSubmit = () => {
-    let record_typeVal = updateForm.record_type.value;
-    let record_stateVal = updateForm.record_state.value;
-    if ((record_typeVal === 'complete' && record_stateVal) || record_typeVal === 'ready') {
-      updateForm.submit();
-    } else {
-      alert('진행상태를 확인해 주세요.');
-    }
-  };
-  document.querySelectorAll('#record_type').forEach((v) =>
-    v.addEventListener('change', () => {
-      updateForm.record_state.value = '';
-    })
-  );
-  const deleteListBtn = () => {
-    console.log(updateForm.idx.value)
-  }
-</script>
 <%- include('../inc/foot.ejs') %>

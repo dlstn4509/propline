@@ -2,15 +2,15 @@
 <div class="pager-wrapper">
   <ul class="pager-wrap">
     <li class="pager pager-prev">
-      <a href="/admin/<%= menuType %>?page=<%= prevPage %>" class="material-icons">chevron_left</a>
+      <a href="<%= menuType %>page=<%= prevPage %>" class="material-icons">chevron_left</a>
     </li>
     <% for(let i=startPage; i<=endPage; i++) { %>
     <li class="pager <%= page === i ? 'active' : '' %>">
-      <a href="/admin/<%= menuType %>?page=<%= i %>"><%= i %></a>
+      <a href="<%= menuType %>page=<%= i %>"><%= i %></a>
     </li>
     <% } %>
     <li class="pager pager-next">
-      <a href="/admin/<%= menuType %>?page=<%= nextPage %>" class="material-icons">chevron_right</a>
+      <a href="<%= menuType %>page=<%= nextPage %>" class="material-icons">chevron_right</a>
     </li>
   </ul>
 </div>

@@ -1,13 +1,39 @@
 const { pool } = require('../../../modules/mysql-md');
 const moment = require('moment');
 
-const findLists = async (startIdx, listCnt) => {
+const findLists = async (startIdx, listCnt, query) => {
   try {
     let sql = ``;
     sql = `
-      SELECT * FROM item_ad_request WHERE request_kind='1' ORDER BY idx DESC
-      LIMIT ${startIdx}, ${listCnt};
+      SELECT * FROM item_ad_request WHERE request_kind='1' 
     `;
+    if (Object.entries(query).length) {
+      for (let [key, val] of Object.entries(query)) {
+        if (
+          key !== 'page' &&
+          key !== 'dateType' &&
+          key !== 'startDate' &&
+          key !== 'finishDate' &&
+          key !== 'admin'
+        ) {
+          sql += ` AND ${key} LIKE '%${val}%' `;
+        }
+        if (key === 'startDate') {
+          sql += ` AND DATE(${query.dateType}) >= '${val}' `;
+        }
+        if (key === 'finishDate') {
+          sql += ` AND DATE(${query.dateType}) <= '${val}' `;
+        }
+        if (key === 'admin') {
+          let sql2 = `
+            SELECT midx FROM m001_member WHERE member_name='${val}'
+          `;
+          const [[{ midx }]] = await pool.execute(sql2);
+          sql += ` AND mod_midx='${midx}' `;
+        }
+      }
+    }
+    sql += `ORDER BY idx DESC LIMIT ${startIdx}, ${listCnt};`;
     const [lists] = await pool.execute(sql);
     lists.forEach((v) => {
       v.reg_date = moment(v.reg_date).format('YYYY-MM-DD');
@@ -43,11 +69,37 @@ const findLists = async (startIdx, listCnt) => {
   }
 };
 
-const findListsCount = async () => {
+const findListsCount = async (query) => {
   try {
     let sql = `
       SELECT COUNT(idx) AS count FROM item_ad_request WHERE request_kind='1'
     `;
+    if (Object.entries(query).length) {
+      for (let [key, val] of Object.entries(query)) {
+        if (
+          key !== 'page' &&
+          key !== 'dateType' &&
+          key !== 'startDate' &&
+          key !== 'finishDate' &&
+          key !== 'admin'
+        ) {
+          sql += ` AND ${key} LIKE '%${val}%' `;
+        }
+        if (key === 'startDate') {
+          sql += ` AND DATE(${query.dateType}) >= '${val}' `;
+        }
+        if (key === 'finishDate') {
+          sql += ` AND DATE(${query.dateType}) <= '${val}' `;
+        }
+        if (key === 'admin') {
+          let sql2 = `
+            SELECT midx FROM m001_member WHERE member_name='${val}'
+          `;
+          const [[{ midx }]] = await pool.execute(sql2);
+          sql += ` AND mod_midx='${midx}' `;
+        }
+      }
+    }
     const [[count]] = await pool.execute(sql);
     return count;
   } catch (err) {
@@ -95,4 +147,16 @@ const updateList = async (body) => {
   }
 };
 
-module.exports = { findLists, findListsCount, findList, updateList };
+const deleteList = async (idx) => {
+  try {
+    let sql = `
+      DELETE FROM item_ad_request WHERE idx='${idx}'
+    `;
+    const [rs] = await pool.execute(sql);
+    return rs;
+  } catch (err) {
+    throw new Error(err);
+  }
+};
+
+module.exports = { findLists, findListsCount, findList, updateList, deleteList };

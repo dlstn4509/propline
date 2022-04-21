@@ -1,6 +1,7 @@
 <%- include('../inc/head.ejs') %> <%- include('../inc/nav.ejs') %>
 <div class="container-wrapper">
   <div class="title">매물의뢰(<%= totalRecord %>)</div>
+  <%- include('./searchWrap.ejs') %>
   <div class="total-count">총 <span class="count-span"><%= totalRecord %></span> 건</div>
   <div class="table-wrap-list">
     <table class="table-bordered table-secondary">
