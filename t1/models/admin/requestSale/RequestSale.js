@@ -14,7 +14,9 @@ const findLists = async (startIdx, listCnt, query) => {
           key !== 'dateType' &&
           key !== 'startDate' &&
           key !== 'finishDate' &&
-          key !== 'admin'
+          key !== 'admin' &&
+          val !== '부동산 내놓기' &&
+          val !== '매물 내놓기'
         ) {
           sql += ` AND ${key} LIKE '%${val}%' `;
         }
@@ -30,6 +32,12 @@ const findLists = async (startIdx, listCnt, query) => {
           `;
           const [[{ midx }]] = await pool.execute(sql2);
           sql += ` AND mod_midx='${midx}' `;
+        }
+        if (val === '부동산 내놓기') {
+          sql += ` AND item_kind != '' `;
+        }
+        if (val === '매물 내놓기') {
+          sql += ` AND item_kind = '' `;
         }
       }
     }
@@ -81,7 +89,9 @@ const findListsCount = async (query) => {
           key !== 'dateType' &&
           key !== 'startDate' &&
           key !== 'finishDate' &&
-          key !== 'admin'
+          key !== 'admin' &&
+          val !== '부동산 내놓기' &&
+          val !== '매물 내놓기'
         ) {
           sql += ` AND ${key} LIKE '%${val}%' `;
         }
@@ -97,6 +107,12 @@ const findListsCount = async (query) => {
           `;
           const [[{ midx }]] = await pool.execute(sql2);
           sql += ` AND mod_midx='${midx}' `;
+        }
+        if (val === '부동산 내놓기') {
+          sql += ` AND item_kind != '' `;
+        }
+        if (val === '매물 내놓기') {
+          sql += ` AND item_kind = '' `;
         }
       }
     }

@@ -40,7 +40,7 @@ router.get('/', async (req, res, next) => {
       const page = Number(req.query.page || 1);
       const pager = createPager(page, totalRecord, 15, 10);
       const lists = await findLists(pager.startIdx, pager.listCnt, req.query);
-      res.render('requestSale/lists', { lists, pager, totalRecord });
+      res.render('requestSale/lists', { lists, pager, totalRecord, query: req.query });
     }
   } catch (err) {
     res.status(500).json(err);
