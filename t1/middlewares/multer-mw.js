@@ -7,12 +7,9 @@ const { v4: uuid } = require('uuid');
 // 폴더 만들기 (ensureDir)
 const destination = async (req, file, cb) => {
   try {
+    const { folderName } = req.body;
     let folder = '';
-    if (file.mimetype.split('/')[0] === 'image') {
-      folder = path.join(__dirname, '../storages/image', moment().format('YYMMDD'));
-    } else {
-      folder = path.join(__dirname, '../storages/video', moment().format('YYMMDD'));
-    }
+    folder = path.join(__dirname, `../storages/${folderName}`, moment().format('YYMMDD'));
     await fs.ensureDir(folder);
     cb(null, folder);
   } catch (err) {

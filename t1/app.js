@@ -58,6 +58,10 @@ const logOutRouter = require('./routes/api/logout');
 app.use('/api/logout', logOutRouter);
 const requestSaleRouter = require('./routes/api/requestSale');
 app.use('/api/requestsale', requestSaleRouter);
+const requestRouter = require('./routes/api/request');
+app.use('/api/request', requestRouter);
+const noticeRouter = require('./routes/api/notice');
+app.use('/api/notice', noticeRouter);
 
 const adminLoginRouter = require('./routes/admin/login');
 app.use('/admin/login', adminLoginRouter);
