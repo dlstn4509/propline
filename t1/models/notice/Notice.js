@@ -89,12 +89,12 @@ const saveNotice = async (body, files) => {
   }
 };
 
-const findLists = async (startIdx) => {
+const findLists = async (startIdx, title, contents) => {
   try {
     let sql = `
       SELECT idx, is_top_rank, title, title_font_color, title_font_weight, reg_date, hit
       FROM notice
-      WHERE record_status = 2
+      WHERE record_status = 2 AND title LIKE '%${title}%' AND contents LIKE '%${contents}%'
       ORDER BY FIELD(is_top_rank, 0, 1) DESC, idx DESC
       LIMIT ${startIdx}, 20
     `;
@@ -131,9 +131,7 @@ const findList = async (idx) => {
     `;
     await pool.execute(sql);
     sql = `
-      SELECT N.idx, N.title, N.contents, N.photo1, N.contents1, N.photo2, N.contents2, N.photo3, N.contents3, N.photo4, N.contents4, N.photo5,
-      N.contents5, N.attached_file1, N.attached_file2, N.hit, N.mod_date,
-      N.attached_file1_oriname, N.attached_file2_oriname,
+      SELECT N.*,
       C.company_name
       FROM notice AS N
       LEFT JOIN m002_company AS C ON N.mod_midx = C.cidx
@@ -181,6 +179,119 @@ const deleteList = async (idx) => {
   }
 };
 
-module.exports = { saveNotice, findLists, listsCount, findList, findFile, deleteList };
+const updateList = async (body, files) => {
+  const {
+    idx,
+    mod_midx,
+    title,
+    title_font_weight,
+    title_font_color,
+    is_top_rank,
+    auth_view,
+    contents,
+    contents1,
+    contents2,
+    contents3,
+    contents4,
+    contents5,
+  } = body;
+  let photo1 = '';
+  let photo2 = '';
+  let photo3 = '';
+  let photo4 = '';
+  let photo5 = '';
+  let attached_file1 = '';
+  let attached_file1_oriname = '';
+  let attached_file2 = '';
+  let attached_file2_oriname = '';
+  try {
+    for (let [key, [val]] of Object.entries(files)) {
+      switch (key) {
+        case 'photo1':
+          photo1 = val.filename;
+          break;
+        case 'photo2':
+          photo2 = val.filename;
+          break;
+        case 'photo3':
+          photo3 = val.filename;
+          break;
+        case 'photo4':
+          photo4 = val.filename;
+          break;
+        case 'photo5':
+          photo5 = val.filename;
+          break;
+        case 'attached_file1':
+          attached_file1 = val.filename;
+          attached_file1_oriname = val.originalname;
+          console.log(val.filename);
+          break;
+        case 'attached_file2':
+          attached_file2 = val.filename;
+          attached_file2_oriname = val.originalname;
+          break;
+      }
+    }
+    let sql = `
+      UPDATE notice SET title=?, title_font_weight=?, title_font_color=?, is_top_rank=?, auth_view=?, contents=?, mod_midx=?
+    `;
+    let values = [title, title_font_weight, title_font_color, is_top_rank, auth_view, contents, mod_midx];
+    if (contents1) {
+      sql += `, contents1='${contents1}' `;
+    }
+    if (contents2) {
+      sql += `, contents2='${contents2}' `;
+    }
+    if (contents3) {
+      sql += `, contents3='${contents3}' `;
+    }
+    if (contents4) {
+      sql += `, contents4='${contents4}' `;
+    }
+    if (contents5) {
+      sql += `, contents5='${contents5}' `;
+    }
+    if (photo1) {
+      sql += `, photo1='${photo1}' `;
+    }
+    if (photo2) {
+      sql += `, photo2='${photo2}' `;
+    }
+    if (photo3) {
+      sql += `, photo3='${photo3}' `;
+    }
+    if (photo4) {
+      sql += `, photo4='${photo4}' `;
+    }
+    if (photo5) {
+      sql += `, photo5='${photo5}' `;
+    }
+    if (attached_file1) {
+      sql += `, attached_file1='${attached_file1}', attached_file1_oriname='${attached_file1_oriname}' `;
+    }
+    if (attached_file2) {
+      sql += `, attached_file2='${attached_file2}', attached_file2_oriname='${attached_file2_oriname}' `;
+    }
+    sql += ` WHERE idx='${idx}' `;
+    const [rs] = await pool.execute(sql, values);
+    return rs;
+  } catch (err) {
+    throw new Error(err);
+  }
+};
 
-// https://t1.propline.co.kr/api/notice/download?idx=160&col=attached_file1
+const deleteImg = async (idx, col) => {
+  try {
+    let sql = `
+      UPDATE notice SET ${col}=''
+      WHERE idx='${idx}'
+    `;
+    const [rs] = await pool.execute(sql);
+    return rs;
+  } catch (err) {
+    throw new Error(err);
+  }
+};
+
+module.exports = { saveNotice, findLists, listsCount, findList, findFile, deleteList, updateList, deleteImg };

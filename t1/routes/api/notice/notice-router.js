@@ -11,7 +11,19 @@ const {
   findList,
   findFile,
   deleteList,
+  updateList,
+  deleteImg,
 } = require('../../../models/notice/Notice');
+
+router.get('/deleteimg', async (req, res, next) => {
+  try {
+    const { idx, col } = req.query;
+    const rs = await deleteImg(idx, col);
+    rs.affectedRows === 1 ? res.status(200).redirect('/notice') : next(err);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
 router.get('/download', async (req, res, next) => {
   try {
@@ -45,9 +57,9 @@ router.get('/listscount', async (req, res, next) => {
 
 router.get('/', async (req, res, next) => {
   try {
-    const { page } = req.query;
+    const { page, title, contents } = req.query;
     let startIdx = (page - 1) * 20;
-    const lists = await findLists(startIdx);
+    const lists = await findLists(startIdx, title, contents);
     res.status(200).json(lists);
   } catch (err) {
     res.status(500).json(err);
@@ -67,8 +79,13 @@ router.post(
   ]),
   async (req, res, next) => {
     try {
-      const rs = await saveNotice(req.body, req.files);
-      rs.affectedRows === 1 ? res.status(200).redirect('/notice') : next(err);
+      if (req.body.update === 'true') {
+        const rs = await updateList(req.body, req.files);
+        rs.affectedRows === 1 ? res.status(200).redirect('/notice') : next(err);
+      } else {
+        const rs = await saveNotice(req.body, req.files);
+        rs.affectedRows === 1 ? res.status(200).redirect('/notice') : next(err);
+      }
     } catch (err) {
       res.status(500).json(err);
     }
@@ -79,7 +96,7 @@ router.delete('/', async (req, res, next) => {
   try {
     const { idx } = req.query;
     const rs = await deleteList(idx);
-    rs.affectedRows === 1 ? res.status(200).redirect('/notice') : next(err);
+    res.status(200).json(rs);
   } catch (err) {
     res.status(500).json(err);
   }
