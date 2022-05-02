@@ -110,7 +110,6 @@ const saveFreeBoard = async (body, files) => {
         WHERE M.midx='${loginUser_midx}'
       `;
       const [[loginUser]] = await pool.execute(sql);
-      console.log(loginUser);
       values.push(
         loginUser.member_id,
         loginUser.company_name,
@@ -147,7 +146,6 @@ const saveFreeBoard = async (body, files) => {
       record_pw=?, record_group=?, member_id=?, company_name=?, user_name=?, phone=?, mobile=?, email=?,
       record_hdepth=?, parent_idx=?, record_vorder=?
     `;
-    console.log(values);
     const [rs] = await pool.execute(sql, values);
     return rs;
   } catch (err) {
@@ -156,14 +154,14 @@ const saveFreeBoard = async (body, files) => {
   }
 };
 
-const findLists = async (startIdx) => {
+const findLists = async (startIdx, member_id, title, contents) => {
   try {
     let sql = `
       SELECT idx, title, title_font_color, title_font_weight, is_secret,
       is_top_rank, record_pw, parent_idx, record_group, record_vorder,
       record_hdepth, auth_view, hit, recommend, member_id, reg_date
       FROM freeboard
-      WHERE record_status=2
+      WHERE record_status=2 AND member_id LIKE '%${member_id}%' AND title LIKE '%${title}%' AND contents LIKE '%${contents}%'
       ORDER BY FIELD(is_top_rank, 0, 1) DESC, record_group DESC, record_vorder ASC
       LIMIT ${startIdx}, 20
     `;
@@ -391,4 +389,39 @@ const deleteImg = async (idx, col) => {
   }
 };
 
-module.exports = { saveFreeBoard, findLists, findList, listsCount, updateList, deleteImg };
+const deleteList = async (idx) => {
+  try {
+    let sql = `
+      UPDATE freeboard SET record_status = 9
+      WHERE idx='${idx}'
+    `;
+    const [rs] = await pool.execute(sql);
+    return rs;
+  } catch (err) {
+    throw new Error(err);
+  }
+};
+
+const likeList = async (idx) => {
+  try {
+    let sql = `
+      UPDATE freeboard SET recommend = recommend + 1
+      WHERE idx='${idx}'
+    `;
+    const [rs] = await pool.execute(sql);
+    return rs;
+  } catch (err) {
+    throw new Error(err);
+  }
+};
+
+module.exports = {
+  saveFreeBoard,
+  findLists,
+  findList,
+  listsCount,
+  updateList,
+  deleteImg,
+  deleteList,
+  likeList,
+};

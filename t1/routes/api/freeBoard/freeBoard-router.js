@@ -10,7 +10,20 @@ const {
   listsCount,
   deleteImg,
   updateList,
+  deleteList,
+  likeList,
 } = require('../../../models/freeBoard/FreeBoard');
+
+router.get('/like', async (req, res, next) => {
+  try {
+    const { idx } = req.query;
+    const rs = await likeList(idx);
+    // rs.affectedRows === 1 ? res.status(200).redirect('/notice') : next(err);
+    res.status(200).json(rs);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
 router.get('/deleteimg', async (req, res, next) => {
   try {
@@ -43,9 +56,9 @@ router.get('/findlist', async (req, res, next) => {
 
 router.get('/', async (req, res, next) => {
   try {
-    const { page } = req.query;
+    const { page, member_id, title, contents } = req.query;
     let startIdx = (page - 1) * 20;
-    const lists = await findLists(startIdx);
+    const lists = await findLists(startIdx, member_id, title, contents);
     res.status(200).json(lists);
   } catch (err) {
     res.status(500).json(err);
@@ -67,7 +80,7 @@ router.post(
     try {
       if (req.body.update === 'true') {
         const { success } = await updateList(req.body, req.files);
-        success ? res.status(200).redirect('/freeboard') : alert('실패');
+        success ? res.status(200).redirect('/freeboard') : next(err);
       } else {
         const rs = await saveFreeBoard(req.body, req.files);
         rs.affectedRows === 1 ? res.status(200).redirect('/freeboard') : next(err);
@@ -77,5 +90,15 @@ router.post(
     }
   }
 );
+
+router.delete('/', async (req, res, next) => {
+  try {
+    const { idx } = req.query;
+    const rs = await deleteList(idx);
+    res.status(200).json(rs);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
 module.exports = { name: '/', router };
