@@ -191,11 +191,51 @@ const findList = async (idx) => {
       WHERE idx='${idx}'
     `;
     const [[list]] = await pool.execute(sql);
-    list.photo1FilePath = list.photo1 ? list.photo1.split('_')[0] + '/' + list.photo1 : '';
-    list.photo2FilePath = list.photo2 ? list.photo2.split('_')[0] + '/' + list.photo2 : '';
-    list.photo3FilePath = list.photo3 ? list.photo3.split('_')[0] + '/' + list.photo3 : '';
-    list.photo4FilePath = list.photo4 ? list.photo4.split('_')[0] + '/' + list.photo4 : '';
-    list.photo5FilePath = list.photo5 ? list.photo5.split('_')[0] + '/' + list.photo5 : '';
+    list.photo1FilePath = list.photo1
+      ? list.photo1.split('_')[1].substring(0, 4) +
+        '/' +
+        list.photo1.split('_')[1].substring(0, 6) +
+        '/' +
+        list.photo1.split('_')[1].substring(0, 8) +
+        '/' +
+        list.photo1
+      : '';
+    list.photo2FilePath = list.photo2
+      ? list.photo2.split('_')[1].substring(0, 4) +
+        '/' +
+        list.photo2.split('_')[1].substring(0, 6) +
+        '/' +
+        list.photo2.split('_')[1].substring(0, 8) +
+        '/' +
+        list.photo2
+      : '';
+    list.photo3FilePath = list.photo3
+      ? list.photo3.split('_')[1].substring(0, 4) +
+        '/' +
+        list.photo3.split('_')[1].substring(0, 6) +
+        '/' +
+        list.photo3.split('_')[1].substring(0, 8) +
+        '/' +
+        list.photo3
+      : '';
+    list.photo4FilePath = list.photo4
+      ? list.photo4.split('_')[1].substring(0, 4) +
+        '/' +
+        list.photo4.split('_')[1].substring(0, 6) +
+        '/' +
+        list.photo4.split('_')[1].substring(0, 8) +
+        '/' +
+        list.photo4
+      : '';
+    list.photo5FilePath = list.photo5
+      ? list.photo5.split('_')[1].substring(0, 4) +
+        '/' +
+        list.photo5.split('_')[1].substring(0, 6) +
+        '/' +
+        list.photo5.split('_')[1].substring(0, 8) +
+        '/' +
+        list.photo5
+      : '';
     list.file1FilePath = list.attached_file1
       ? list.attached_file1.split('_')[0] + '/' + list.attached_file1
       : '';
@@ -415,6 +455,16 @@ const likeList = async (idx) => {
   }
 };
 
+const findFile = async (idx, col) => {
+  try {
+    let sql = ` SELECT ${col}, ${col + '_oriname'} FROM freeboard WHERE idx = ${idx} `;
+    const [[file]] = await pool.execute(sql);
+    return file;
+  } catch (err) {
+    throw new Error(err);
+  }
+};
+
 module.exports = {
   saveFreeBoard,
   findLists,
@@ -424,4 +474,5 @@ module.exports = {
   deleteImg,
   deleteList,
   likeList,
+  findFile,
 };

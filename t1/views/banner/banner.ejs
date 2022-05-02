@@ -1,0 +1,174 @@
+<%- include('../inc/head.ejs') %>
+<div class="flex-div">
+  <%- include('../inc/nav.ejs') %>
+  <div class="container-wrapper">
+    <div class="title">배너</div>
+    <div class="form-wrapper">
+      <form action="" name="bannerForm">
+        <table class="banner-table table-bordered">
+          <tbody>
+            <tr>
+              <td class="td-first"><span class="redStar">*</span>배너 위치</td>
+              <td>
+                <div class="flex-div">
+                  <select name="" id="">
+                    <option value="seoul">서울공실클럽</option>
+                    <option value="incheon">인천공실클럽</option>
+                  </select>
+                  <select name="" id="">
+                    <option value="110" selected>공실클럽V4메인-광고</option>
+                    <option value="106">프리미엄매물관-미디어홍보관</option>
+                    <option value="107">프리미엄매물관-신축빌라관</option>
+                    <option value="109">프리미엄매물관-전속건물관</option>
+                    <option value="105">메인-분양광고</option>
+                    <option value="103">프리미엄배너</option>
+                    <option value="104">연락처정보</option>
+                    <option value="108">공실-매물상세</option>
+                    <option value="101">사이트 우측</option>
+                    <option value="301">중고나라매물상세상단</option>
+                    <option value="302">중고나라매물상세하단</option>
+                    <option value="901">이벤트</option>
+                  </select>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="td-first"><span class="redStar">*</span>배너 제목</td>
+              <td><input type="text" class="banner-title" /></td>
+            </tr>
+            <tr>
+              <td class="td-first"><span class="redStar">*</span>배너 이미지</td>
+              <td>
+                <div><img src="" alt="" /></div>
+                <div><input type="file" /> <span class="size">(가로: 780px, 세로: 440px)</span></div>
+              </td>
+            </tr>
+            <tr>
+              <td class="td-first"><span class="redStar">*</span>게시 기간</td>
+              <td>
+                <div class="flex-div"><input type="date" /> ~ <input type="date" /></div>
+              </td>
+            </tr>
+            <tr>
+              <td class="td-first"><span class="redStar">*</span>게시 여부</td>
+              <td>
+                <div class="flex-div">
+                  <input type="radio" id="게시안함" class="radio-input" name="is_on" />
+                  <label for="게시안함">게시안함</label>
+                  <input type="radio" id="게시함" class="radio-input" name="is_on" checked />
+                  <label for="게시함">게시함</label>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="td-first"><span class="redStar">*</span>링크 유무</td>
+              <td>
+                <div class="flex-div">
+                  <input type="radio" id="링크 없음" class="radio-input" name="link_count" checked />
+                  <label for="링크 없음">링크 없음</label>
+                  <input type="radio" id="링크 있음" class="radio-input" name="link_count" />
+                  <label for="링크 있음">링크 있음</label>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="td-first"><span class="redStar">*</span>링크 창</td>
+              <td>
+                <div class="flex-div">
+                  <input
+                    type="radio"
+                    id="새창에 열기"
+                    class="radio-input"
+                    name="link_target"
+                    value="2"
+                    checked
+                  />
+                  <label for="새창에 열기">새창에 열기</label>
+                  <input type="radio" id="현재창에 열기" class="radio-input" name="link_target" value="1" />
+                  <label for="현재창에 열기">현재창에 열기</label>
+                  <input type="radio" id="팝업창에 열기" class="radio-input" name="link_target" value="3" />
+                  <label for="팝업창에 열기">팝업창에 열기</label>
+                </div>
+              </td>
+            </tr>
+            <tr class="hide px">
+              <td class="td-first"><span class="redStar">*</span>팝업창 크기</td>
+              <td>
+                <div class="flex-div">
+                  <div class="px-text">가로 :</div>
+                  <div><input type="text" /></div>
+                  <div class="px-text">px</div>
+                  <div class="px-text">세로 :</div>
+                  <div><input type="text" /></div>
+                  <div class="px-text">px</div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="td-first"><span class="redStar">*</span>링크 방식</td>
+              <td>
+                <div class="flex-div">
+                  <input type="radio" id="urlInput" class="radio-input" name="link_type" value="1" checked />
+                  <label for="urlInput">URL 입력</label>
+                  <input type="radio" id="imgInput" class="radio-input" name="link_type" value="2" />
+                  <label for="imgInput">이미지업로드(URL자동생성)</label>
+                </div>
+              </td>
+            </tr>
+            <tr class="urlInput hide">
+              <td class="td-first"><span class="redStar">*</span>상세이미지</td>
+              <td>
+                <input type="file" style="display: none" id="img-file" />
+                <label for="img-file" class="load-img">사진 불러오기</label>
+              </td>
+            </tr>
+            <tr class="urlInput hide">
+              <td class="td-first"><span class="redStar">*</span>유투브 동영상 URL</td>
+              <td>
+                <input type="text" class="banner-title" />
+              </td>
+            </tr>
+            <tr class="urlInput hide">
+              <td class="td-first"><span class="redStar">*</span>유투브 동영상 위치</td>
+              <td>
+                <select name="" id="">
+                  <option value="">선택</option>
+                  <option value="">처음</option>
+                  <option value="">2번 이미지 앞</option>
+                  <option value="">마지막</option>
+                </select>
+              </td>
+            </tr>
+            <tr class="urlInput hide">
+              <td class="td-first"><span class="redStar">*</span>유투브 동영상 게시여부</td>
+              <td>
+                <div class="flex-div">
+                  <input
+                    type="radio"
+                    id="noPost"
+                    class="radio-input"
+                    name="movie1_display"
+                    value="1"
+                    checked
+                  />
+                  <label for="noPost">게시안함</label>
+                  <input type="radio" id="isPost" class="radio-input" name="movie1_display" value="2" />
+                  <label for="isPost">게시함</label>
+                </div>
+              </td>
+            </tr>
+            <tr class="imgInput">
+              <td class="td-first"><span class="redStar">*</span>링크 URL</td>
+              <td><input type="text" class="banner-title" /></td>
+            </tr>
+            <tr>
+              <td class="td-first"><span class="redStar">*</span>메모</td>
+              <td><textarea name="" id="" cols="30" rows="10"></textarea></td>
+            </tr>
+          </tbody>
+        </table>
+      </form>
+    </div>
+  </div>
+</div>
+<%- include('../inc/foot.ejs') %>

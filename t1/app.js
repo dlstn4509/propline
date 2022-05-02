@@ -73,6 +73,8 @@ const adminMainRouter = require('./routes/admin/main');
 app.use('/admin/main', adminMainRouter);
 const adminRequestSaleRouter = require('./routes/admin/requestSale');
 app.use('/admin/requestsale', adminRequestSaleRouter);
+const adminBannerRouter = require('./routes/admin/banner');
+app.use('/admin/banner', adminBannerRouter);
 
 /*************** vue init **************/
 let paths = [

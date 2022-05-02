@@ -12,6 +12,7 @@ const {
   updateList,
   deleteList,
   likeList,
+  findFile,
 } = require('../../../models/freeBoard/FreeBoard');
 
 router.get('/like', async (req, res, next) => {
@@ -20,6 +21,29 @@ router.get('/like', async (req, res, next) => {
     const rs = await likeList(idx);
     // rs.affectedRows === 1 ? res.status(200).redirect('/notice') : next(err);
     res.status(200).json(rs);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+router.get('/download', async (req, res, next) => {
+  try {
+    const { idx, col } = req.query;
+    const file = await findFile(idx, col);
+    let fileArr = Object.values(file)[0].split('_');
+    res
+      .status(200)
+      .download(
+        't1/storages/' +
+          fileArr[1].substring(0, 4) +
+          '/' +
+          fileArr[1].substring(0, 6) +
+          '/' +
+          fileArr[1].substring(0, 8) +
+          '/' +
+          file[`${col}`],
+        file[`${col}_oriname`]
+      );
   } catch (err) {
     res.status(500).json(err);
   }
