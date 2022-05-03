@@ -66,6 +66,7 @@ const freeBoardRouter = require('./routes/api/freeBoard');
 app.use('/api/freeboard', freeBoardRouter);
 
 const adminLoginRouter = require('./routes/admin/login');
+app.use('/admin', adminLoginRouter);
 app.use('/admin/login', adminLoginRouter);
 const adminSignUpRouter = require('./routes/admin/signUp');
 app.use('/admin/signup', adminSignUpRouter);

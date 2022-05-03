@@ -1,57 +1,81 @@
-.banner-table {
-  tbody {
-    .hide {
-      display: none;
-    }
-    tr {
-      .td-first {
-        background-color: rgb(238, 238, 238);
-        width: 180px;
-        font-weight: bold;
+.banner-form {
+  .banner-table {
+    margin-bottom: 20px;
+    tbody {
+      .hide {
+        display: none;
       }
-      td {
-        padding: 6px;
-        .radio-input {
-          margin-right: 6px;
+      tr {
+        .td-first {
+          background-color: rgb(238, 238, 238);
+          width: 180px;
+          font-weight: bold;
         }
-        .px-text {
-          margin-right: 10px;
-        }
-        .load-img {
-          background-color: coral;
-          color: #ffffff;
-          border: 0.5px solid #000;
-          padding: 4px 6px;
-        }
-        span {
-          &.redStar {
-            color: red;
-            margin: 0 6px;
+        td {
+          padding: 6px;
+          .radio-input {
+            margin-right: 6px;
           }
-          &.size {
-            color: blue;
+          .px-text {
+            margin-right: 10px;
           }
-        }
-        select {
-          width: auto;
-          height: auto;
-          margin-right: 20px;
-        }
-        input {
-          width: auto;
-          height: auto;
-          &.banner-title {
+          .load-img {
+            background-color: coral;
+            color: #ffffff;
+            border: 0.5px solid #000;
+            padding: 4px 6px;
+            margin-bottom: 20px;
+          }
+          .img-wrap {
+            width: 600px;
+            img {
+              max-width: 100%;
+            }
+          }
+          .thumb {
+            border: 1px solid blue;
+            width: 120px;
+            height: 120px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            img {
+              width: 100%;
+              height: 100%;
+            }
+          }
+          span {
+            &.redStar {
+              color: red;
+              margin: 0 6px;
+            }
+            &.size {
+              color: blue;
+            }
+          }
+          select {
+            width: auto;
+            height: auto;
+            margin-right: 20px;
+          }
+          input {
+            width: auto;
+            height: auto;
+            &.banner-title {
+              width: 600px;
+            }
+          }
+          label {
+            margin-bottom: 0;
+            margin-right: 20px;
+          }
+          textarea {
             width: 600px;
           }
         }
-        label {
-          margin-bottom: 0;
-          margin-right: 20px;
-        }
-        textarea {
-          width: 600px;
-        }
       }
     }
+  }
+  .btn-wrap {
+    text-align: center;
   }
 }
