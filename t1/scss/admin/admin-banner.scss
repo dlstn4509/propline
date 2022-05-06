@@ -43,6 +43,16 @@
               height: 100%;
             }
           }
+          .thumb-delete-btn {
+            position: absolute;
+            background-color: blue;
+            color: #fff;
+            right: 0;
+            top: 0;
+            width: 10px;
+            text-align: center;
+            cursor: pointer;
+          }
           span {
             &.redStar {
               color: red;
@@ -77,5 +87,30 @@
   }
   .btn-wrap {
     text-align: center;
+  }
+}
+
+.list-table {
+  text-align: center;
+  thead {
+    background-color: #eeeeee;
+  }
+  tbody {
+    tr {
+      .blue {
+        color: blue;
+      }
+      td {
+        vertical-align: middle;
+        height: auto;
+      }
+    }
+  }
+  input {
+    width: 30px;
+    height: 20px;
+  }
+  button {
+    width: auto;
   }
 }

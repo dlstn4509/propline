@@ -1,0 +1,51 @@
+<%- include('../inc/head.ejs') %>
+<div class="flex-div">
+  <%- include('../inc/nav.ejs') %>
+  <div class="container-wrapper">
+    <div class="title">배너</div>
+    <div style="margin-top: 50px; margin-bottom: 20px">
+      <a href="/admin/banner?type=form" class="btn btn-primary" style="color: #ffffff">등록</a>
+    </div>
+    <table class="table table-bordered list-table">
+      <thead>
+        <tr>
+          <th style="width: 4%"></th>
+          <th style="width: 15%">배너제목</th>
+          <th style="width: 20%">배너 이미지</th>
+          <th style="width: 5%">정렬순서</th>
+          <th style="width: 14%">게시기간</th>
+          <th style="width: 6%">게시여부</th>
+          <th style="width: 14%">최종수정일</th>
+          <th style="width: 6%">노출수</th>
+          <th style="width: 5%">클릭수</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for(let v of lists) { %>
+        <tr>
+          <td></td>
+          <td><%= v.title %></td>
+          <td><img src="/<%= v.banner_image %>" alt="" class="mw-100" /></td>
+          <td><input type="text" value="<%= v.order_no %>" /></td>
+          <td><%= v.start_date %> ~ <%= v.end_date %></td>
+          <td class="<%= v.is_on_color %>"><%= v.is_on %></td>
+          <td><%= v.mod_date %></td>
+          <td><%= v.view_count %></td>
+          <td><%= v.click_count %></td>
+          <td>
+            <div style="display: flex; flex-wrap: wrap">
+              <a href="/admin/banner?idx=<%= v.idx %>">
+                <button class="btn btn-success" style="margin: 0 10px 10px 0">수정</button>
+              </a>
+              <button class="btn btn-danger" style="margin-bottom: 10px">삭제</button>
+              <button class="btn btn-secondary">링크보기</button>
+            </div>
+          </td>
+        </tr>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<%- include('../inc/foot.ejs') %>

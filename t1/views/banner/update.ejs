@@ -12,7 +12,9 @@
         class="banner-form"
       >
         <input type="hidden" name="folderName" value="banner" />
-        <input type="hidden" name="reg_midx" value="<%= user.midx ? user.midx : 1011 %>" />
+        <input type="hidden" name="mod_midx" value="<%= user.midx ? user.midx : 1011 %>" />
+        <input type="hidden" name="type" value="update" />
+        <input type="hidden" name="idx" value="<%= list.idx %>" />
         <table class="banner-table table-bordered">
           <tbody>
             <tr>
@@ -20,11 +22,11 @@
               <td>
                 <div class="flex-div">
                   <select name="site_id">
-                    <option value="1000">서울공실클럽</option>
-                    <option value="1001">인천공실클럽</option>
+                    <option value="1000" selected="<%= list.site_id === 1000 %>">서울공실클럽</option>
+                    <option value="1001" selected="<%= list.site_id === 1001 %>">인천공실클럽</option>
                   </select>
                   <select name="area_code">
-                    <option value="1" selected>공실클럽V4메인-광고</option>
+                    <option value="1">공실클럽V4메인-광고</option>
                     <option value="2">프리미엄매물관-미디어홍보관</option>
                     <option value="3">프리미엄매물관-신축빌라관</option>
                     <option value="4">프리미엄매물관-전속건물관</option>
@@ -43,13 +45,15 @@
 
             <tr>
               <td class="td-first"><span class="redStar">*</span>배너 제목</td>
-              <td><input type="text" name="title" class="banner-title" /></td>
+              <td><input type="text" name="title" class="banner-title" value="<%= list.title %>" /></td>
             </tr>
 
             <tr>
               <td class="td-first"><span class="redStar">*</span>배너 이미지</td>
               <td>
-                <div class="img-wrap"><img src="" alt="" name="bannerImg" /></div>
+                <div class="img-wrap">
+                  <img src="/<%= list.banner_image_src %>" alt="" name="bannerImg" />
+                </div>
                 <div>
                   <input type="file" name="banner_image" />
                   <span class="size">(가로: 780px, 세로: 440px)</span>
@@ -61,7 +65,8 @@
               <td class="td-first"><span class="redStar">*</span>게시 기간</td>
               <td>
                 <div class="flex-div">
-                  <input type="date" name="start_date" /> ~ <input type="date" name="end_date" />
+                  <input type="date" name="start_date" value="<%= list.start_date %>" /> ~
+                  <input type="date" name="end_date" value="<%= list.end_date %>" />
                 </div>
               </td>
             </tr>
@@ -70,9 +75,11 @@
               <td class="td-first"><span class="redStar">*</span>게시 여부</td>
               <td>
                 <div class="flex-div">
-                  <input type="radio" id="게시안함" class="radio-input" name="is_on" value="1" />
+                  <input type="radio" id="게시안함" class="radio-input" name="is_on" value="1" <%=
+                  list.is_on===1 ? 'checked' : '' %> />
                   <label for="게시안함">게시안함</label>
-                  <input type="radio" id="게시함" class="radio-input" name="is_on" value="2" checked />
+                  <input type="radio" id="게시함" class="radio-input" name="is_on" value="2" <%=
+                  list.is_on===2 ? 'checked' : '' %> />
                   <label for="게시함">게시함</label>
                 </div>
               </td>
@@ -82,37 +89,28 @@
               <td class="td-first"><span class="redStar">*</span>링크 유무</td>
               <td>
                 <div class="flex-div">
-                  <input
-                    type="radio"
-                    id="링크 없음"
-                    class="radio-input"
-                    name="link_count"
-                    value="0"
-                    checked
-                  />
+                  <input type="radio" id="링크 없음" class="radio-input" name="link_count" value="0" <%=
+                  list.link_count===0 ? 'checked' : '' %> />
                   <label for="링크 없음">링크 없음</label>
-                  <input type="radio" id="링크 있음" class="radio-input" name="link_count" value="1" />
+                  <input type="radio" id="링크 있음" class="radio-input" name="link_count" value="1" <%=
+                  list.link_count===1 ? 'checked' : '' %> />
                   <label for="링크 있음">링크 있음</label>
                 </div>
               </td>
             </tr>
 
-            <tr class="link hide">
+            <tr class="link <%= list.link_count === 0 ? 'hide' : '' %>">
               <td class="td-first"><span class="redStar">*</span>링크 창</td>
               <td>
                 <div class="flex-div">
-                  <input
-                    type="radio"
-                    id="새창에 열기"
-                    class="radio-input"
-                    name="link_target"
-                    value="2"
-                    checked
-                  />
+                  <input type="radio" id="새창에 열기" class="radio-input" name="link_target" value="2" <%=
+                  list.link_target===2 ? 'checked' : '' %> />
                   <label for="새창에 열기">새창에 열기</label>
-                  <input type="radio" id="현재창에 열기" class="radio-input" name="link_target" value="1" />
+                  <input type="radio" id="현재창에 열기" class="radio-input" name="link_target" value="1" <%=
+                  list.link_target===1 ? 'checked' : '' %> />
                   <label for="현재창에 열기">현재창에 열기</label>
-                  <input type="radio" id="팝업창에 열기" class="radio-input" name="link_target" value="3" />
+                  <input type="radio" id="팝업창에 열기" class="radio-input" name="link_target" value="3" <%=
+                  list.link_target===3 ? 'checked' : '' %> />
                   <label for="팝업창에 열기">팝업창에 열기</label>
                 </div>
               </td>
@@ -123,79 +121,66 @@
               <td>
                 <div class="flex-div">
                   <div class="px-text">가로 :</div>
-                  <div><input type="text" name="window_width" /></div>
+                  <div><input type="text" name="window_width" value="<%= list.window_width %>" /></div>
                   <div class="px-text">px</div>
                   <div class="px-text">세로 :</div>
-                  <div><input type="text" name="window_height" /></div>
+                  <div><input type="text" name="window_height" value="<%= list.window_height %>" /></div>
                   <div class="px-text">px</div>
                 </div>
               </td>
             </tr>
 
-            <tr class="link hide">
+            <tr class="link <%= list.link_count === 0 ? 'hide' : '' %>">
               <td class="td-first"><span class="redStar">*</span>링크 방식</td>
               <td>
                 <div class="flex-div">
-                  <input type="radio" id="urlInput" class="radio-input" name="link_type" value="1" checked />
+                  <input type="radio" id="urlInput" class="radio-input" name="link_type" value="1" <%=
+                  list.link_type===1 ? 'checked' : '' %> />
                   <label for="urlInput">URL 입력</label>
-                  <input type="radio" id="imgInput" class="radio-input" name="link_type" value="2" />
+                  <input type="radio" id="imgInput" class="radio-input" name="link_type" value="2" <%=
+                  list.link_type===2 ? 'checked' : '' %> />
                   <label for="imgInput">이미지업로드(URL자동생성)</label>
                 </div>
               </td>
             </tr>
 
-            <tr class="urlInput hide">
+            <tr class="urlInput <%= list.detail_imageArr ? '' : 'hide' %>">
               <td class="td-first"><span class="redStar">*</span>상세이미지</td>
-              <td>
+              <td class="thumb-wrap">
                 <input
                   type="file"
-                  class="thumb-img-input"
                   style="display: none"
-                  id="thumb-img-input01"
-                  name="thumbImg01"
+                  id="thumb-img-input1"
+                  name="thumbImg1"
+                  onchange="onchangeThumb(this)"
                 />
-                <input
-                  type="file"
-                  class="thumb-img-input"
-                  style="display: none"
-                  id="thumb-img-input02"
-                  name="thumbImg02"
-                />
-                <input
-                  type="file"
-                  class="thumb-img-input"
-                  style="display: none"
-                  id="thumb-img-input03"
-                  name="thumbImg03"
-                />
-                <input
-                  type="file"
-                  class="thumb-img-input"
-                  style="display: none"
-                  id="thumb-img-input04"
-                  name="thumbImg04"
-                />
-                <input
-                  type="file"
-                  class="thumb-img-input"
-                  style="display: none"
-                  id="thumb-img-input05"
-                  name="thumbImg05"
-                />
-                <label for="thumb-img-input01" class="load-img">사진 불러오기</label>
-                <span>최대 5개</span>
-                <div class="flex-div thumb-img-wrap" style="flex-wrap: wrap"></div>
+                <label for="thumb-img-input1" class="load-img">사진 불러오기</label>
+                <div class="flex-div thumb-img-wrap" style="flex-wrap: wrap">
+                  <% if(list.detail_imageArr) { %> <% for(let v of list.detail_imageArr) { %>
+                  <div class="thumb" style="position: relative">
+                    <img src="/<%= v.src %>" alt="" />
+                    <div
+                      class="thumb-delete-btn"
+                      data-idx="<%= list.idx %>"
+                      data-path="<%= v.path %>"
+                      onclick="updateThumb(this)"
+                    >
+                      x
+                    </div>
+                  </div>
+                  <% } %> <% } %>
+                </div>
               </td>
             </tr>
 
-            <tr class="urlInput hide link">
+            <tr class="urlInput link <%= list.link_type === 1 ? 'hide' : '' %>">
               <td class="td-first"><span class="redStar">*</span>유투브 동영상 URL</td>
               <td>
                 <input type="text" name="movie1_url" class="banner-title" />
               </td>
             </tr>
 
-            <tr class="urlInput hide link">
+            <tr class="urlInput link <%= list.link_type === 1 ? 'hide' : '' %>">
               <td class="td-first"><span class="redStar">*</span>유투브 동영상 위치</td>
               <td>
                 <select name="movie1_position">
@@ -204,7 +189,7 @@
               </td>
             </tr>
 
-            <tr class="urlInput hide link">
+            <tr class="urlInput link <%= list.link_type === 1 ? 'hide' : '' %>">
               <td class="td-first"><span class="redStar">*</span>유투브 동영상 게시여부</td>
               <td>
                 <div class="flex-div">
@@ -223,7 +208,9 @@
               </td>
             </tr>
 
-            <tr class="imgInput link hide">
+            <tr
+              class="imgInput link <%= list.link_type === 2 ? 'hide' : '' %> <%= list.link_count === 0 ? 'hide' : '' %>"
+            >
               <td class="td-first"><span class="redStar">*</span>링크 URL</td>
               <td><input type="text" class="banner-title" name="link_url" /></td>
             </tr>
@@ -236,10 +223,22 @@
         </table>
         <div class="btn-wrap">
           <button class="btn btn-primary">등록</button>
-          <a href="" class="btn btn-success" style="color: #fff">목록</a>
+          <a href="/admin/banner" class="btn btn-success" style="color: #fff">목록</a>
         </div>
       </form>
     </div>
   </div>
 </div>
+<script>
+  let area_code_num = '<%= list.area_code %>';
+  Object.entries(bannerForm.area_code.options).forEach((v) => {
+    if (area_code_num - 1 === Number(v[0])) {
+      v[1].selected = true;
+    } else {
+      v[1].selected = false;
+    }
+  });
+
+  let thumbImgInputNum = 1;
+</script>
 <%- include('../inc/foot.ejs') %>
