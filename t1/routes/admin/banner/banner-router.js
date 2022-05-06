@@ -47,10 +47,10 @@ router.post('/', upload.any(), async (req, res, next) => {
     let { type } = req.body;
     if (type === 'update') {
       const rs = await updateBanner(req.body, req.files);
-      res.json(rs);
+      rs.affectedRows === 1 ? res.status(200).redirect('/admin/banner') : next(err);
     } else {
       const rs = await saveBanner(req.body, req.files);
-      res.json(rs);
+      rs.affectedRows === 1 ? res.status(200).redirect('/admin/banner') : next(err);
     }
   } catch (err) {
     res.status(500).json(err);

@@ -220,12 +220,12 @@ const updateBanner = async (body, files) => {
     ];
     if (banner_image) {
       sql += `
-        , banner_image=${banner_image}
+        , banner_image='${banner_image}'
       `;
     }
     if (link_count === '1') {
       // 링크 있음
-      sql += `, link_target=${link_target}, link_type=${link_type}`;
+      // sql += `, link_target=${link_target}, link_type='${link_type}'`;
       if (link_target === '3') {
         sql += `, window_width='${window_width}, window_height='${window_height}'`;
       }
