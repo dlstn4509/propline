@@ -22,8 +22,8 @@
               <td>
                 <div class="flex-div">
                   <select name="site_id">
-                    <option value="1000" selected="<%= list.site_id === 1000 %>">서울공실클럽</option>
-                    <option value="1001" selected="<%= list.site_id === 1001 %>">인천공실클럽</option>
+                    <option value="1000" <%= list.site_id === 1000 ? 'selected' : ''%>>서울공실클럽</option>
+                    <option value="1001" <%= list.site_id === 1001 ? 'selected' : ''%>>인천공실클럽</option>
                   </select>
                   <select name="area_code">
                     <option value="1">공실클럽V4메인-광고</option>
@@ -176,7 +176,7 @@
             <tr class="urlInput link <%= list.link_type === 1 ? 'hide' : '' %>">
               <td class="td-first"><span class="redStar">*</span>유투브 동영상 URL</td>
               <td>
-                <input type="text" name="movie1_url" class="banner-title" />
+                <input type="text" name="movie1_url" class="banner-title" value="<%= list.movie1_url %>" />
               </td>
             </tr>
 
@@ -185,6 +185,13 @@
               <td>
                 <select name="movie1_position">
                   <option value="">선택</option>
+                  <% if(list.detail_imageArr) { %>
+                    <option value="1" <%= list.movie1_position === 1 ? 'selected' : '' %>>처음</option>
+                    <% for (let i=2; i<=list.detail_imageArr.length; i++) { %>
+                      <option value="<%= i %>" <%= list.movie1_position === i ? 'selected' : '' %>><%= i %>번 이미지 앞</option>
+                    <% } %> 
+                    <option value="0" <%= list.movie1_position === 0 ? 'selected' : '' %>>마지막</option>
+                  <% } %>
                 </select>
               </td>
             </tr>
@@ -199,10 +206,11 @@
                     class="radio-input"
                     name="movie1_display"
                     value="1"
-                    checked
+                    <%= list.movie1_display === 1 ? 'checked' : '' %>
                   />
                   <label for="noPost">게시안함</label>
-                  <input type="radio" id="isPost" class="radio-input" name="movie1_display" value="2" />
+                  <input type="radio" id="isPost" class="radio-input" name="movie1_display" value="2" 
+                    <%= list.movie1_display === 2 ? 'checked' : '' %> />
                   <label for="isPost">게시함</label>
                 </div>
               </td>
@@ -212,7 +220,7 @@
               class="imgInput link <%= list.link_type === 2 ? 'hide' : '' %> <%= list.link_count === 0 ? 'hide' : '' %>"
             >
               <td class="td-first"><span class="redStar">*</span>링크 URL</td>
-              <td><input type="text" class="banner-title" name="link_url" /></td>
+              <td><input type="text" class="banner-title" name="link_url" value="<%= list.link_url %>" /></td>
             </tr>
 
             <tr>
@@ -239,6 +247,7 @@
     }
   });
 
-  let thumbImgInputNum = 1;
+  let thumbImgInputNum = '<%= list.detail_imageArr %>' ? Number('<%= list.detail_imageArr.length %>') +1 : 1;
+  console.log('<%= list.detail_imageArr.length %>')
 </script>
 <%- include('../inc/foot.ejs') %>

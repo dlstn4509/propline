@@ -64,6 +64,8 @@ const noticeRouter = require('./routes/api/notice');
 app.use('/api/notice', noticeRouter);
 const freeBoardRouter = require('./routes/api/freeBoard');
 app.use('/api/freeboard', freeBoardRouter);
+const bannerRouter = require('./routes/api/banner');
+app.use('/api/banner', bannerRouter);
 
 const adminLoginRouter = require('./routes/admin/login');
 app.use('/admin', adminLoginRouter);

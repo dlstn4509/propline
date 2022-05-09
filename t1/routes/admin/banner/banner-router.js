@@ -20,6 +20,17 @@ router.get('/updatethumb', async (req, res, next) => {
     res.status(500).json(err);
   }
 });
+
+router.get('/search', async (req, res, next) => {
+  try {
+    let { site_id, area_code } = req.query;
+    const rs = await findLists(site_id, area_code);
+    res.json(rs);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 router.get('/', async (req, res, next) => {
   try {
     let { type } = req.query;
@@ -33,7 +44,7 @@ router.get('/', async (req, res, next) => {
       const list = await findList(idx);
       res.render('banner/update', { user: req.user, list });
     } else {
-      const lists = await findLists();
+      const lists = await findLists(1000);
       req.app.locals.js = '';
       res.render('banner/list', { user: req.user, lists });
     }

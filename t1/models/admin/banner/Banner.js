@@ -71,7 +71,7 @@ const saveBanner = async (body, files) => {
         `;
         if (movie1_url) {
           // 유투브 동영상 URL 있으면
-          slq += `
+          sql += `
           , movie1_url='${movie1_url}', movie1_position='${movie1_position}',
           movie1_display='${movie1_display}'
           `;
@@ -86,13 +86,17 @@ const saveBanner = async (body, files) => {
   }
 };
 
-const findLists = async () => {
+const findLists = async (site_id, area_code) => {
   try {
     let sql = `
       SELECT idx, title, banner_image, order_no, start_date, end_date,
       is_on, mod_date, view_count, click_count
       FROM banner
+      WHERE site_id=${site_id} 
     `;
+    if (area_code) {
+      sql += `AND area_code=${area_code}`;
+    }
     const [lists] = await pool.execute(sql);
     for (let v of lists) {
       let bannerArr = v.banner_image.split('/');
@@ -100,8 +104,8 @@ const findLists = async () => {
       v.start_date = moment(v.start_date).format('YYYY-MM-DD');
       v.end_date = moment(v.end_date).format('YYYY-MM-DD');
       v.mod_date = moment(v.mod_date).format('YYYY-MM-DD HH:mm:ss');
-      v.is_on_color = v.is_on === '1' ? '' : 'blue';
-      v.is_on = v.is_on === '1' ? '게시안함' : '게시함';
+      v.is_on_color = v.is_on === 1 ? '' : 'blue';
+      v.is_on = v.is_on === 1 ? '게시안함' : '게시함';
     }
     return lists;
   } catch (err) {
@@ -190,8 +194,16 @@ const updateBanner = async (body, files) => {
       window_height,
       /*  */
     } = body;
+    let sql = '';
     let banner_image = '';
     let thumbImg = '';
+
+    sql = `
+      SELECT detail_image FROM banner
+      WHERE idx='${idx}'
+    `;
+    const [[{ detail_image }]] = await pool.execute(sql);
+    thumbImg = detail_image;
 
     for (let [[key], val] of Object.entries(files)) {
       let valArr = val.destination.split('\\');
@@ -199,10 +211,15 @@ const updateBanner = async (body, files) => {
         banner_image = `/${valArr[4]}/${valArr[5]}/${valArr[6]}/${valArr[7]}/${val.filename}`;
       }
       if (val.fieldname.includes('thumbImg')) {
-        thumbImg += `/${valArr[4]}/${valArr[5]}/${valArr[6]}/${valArr[7]}/${val.filename}^`;
+        if (thumbImg) {
+          thumbImg += `^/${valArr[4]}/${valArr[5]}/${valArr[6]}/${valArr[7]}/${val.filename}^`;
+        } else {
+          thumbImg += `/${valArr[4]}/${valArr[5]}/${valArr[6]}/${valArr[7]}/${val.filename}^`;
+        }
+        thumbImg = thumbImg.substring(0, thumbImg.length - 1);
       }
     }
-    let sql = `
+    sql = `
       UPDATE banner SET
       site_id=?, area_code=?, title=?, link_count=?, start_date=?, end_date=?, is_on=?,
       mod_midx=?, mod_date=?
@@ -234,14 +251,13 @@ const updateBanner = async (body, files) => {
         sql += `, link_url='${link_url}'`;
       } else {
         // 이미지업로드(URL자동생성)
-        thumbImg = thumbImg.substring(0, thumbImg.length - 1);
         sql += `
           , detail_image='${thumbImg}'
         `;
         if (movie1_url) {
           // 유투브 동영상 URL 있으면
-          slq += `
-          , movie1_url='${movie1_url}', movie1_position='${movie1_position}',
+          sql += `
+          , movie1_url='${movie1_url}', movie1_position=${movie1_position},
           movie1_display='${movie1_display}'
           `;
         }

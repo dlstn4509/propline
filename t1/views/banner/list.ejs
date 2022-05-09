@@ -3,8 +3,29 @@
   <%- include('../inc/nav.ejs') %>
   <div class="container-wrapper">
     <div class="title">배너</div>
-    <div style="margin-top: 50px; margin-bottom: 20px">
-      <a href="/admin/banner?type=form" class="btn btn-primary" style="color: #ffffff">등록</a>
+    <div style="margin-top: 50px; margin-bottom: 20px" class="flex-div search-select">
+      <a href="/admin/banner?type=form" class="btn btn-primary" style="color: #ffffff; margin-right: 20px"
+        >등록</a
+      >
+      <select name="site_id" id="site_id" onchange="searchSelectChange(this)">
+        <option value="1000">서울공실클럽</option>
+        <option value="1001">인천공실클럽</option>
+      </select>
+      <select name="area_code" id="area_code" onchange="searchSelectChange(this)">
+        <option value="" selected>전체</option>
+        <option value="1">공실클럽V4메인-광고</option>
+        <option value="2">프리미엄매물관-미디어홍보관</option>
+        <option value="3">프리미엄매물관-신축빌라관</option>
+        <option value="4">프리미엄매물관-전속건물관</option>
+        <option value="5">메인-분양광고</option>
+        <option value="6">프리미엄배너</option>
+        <option value="7">연락처정보</option>
+        <option value="8">공실-매물상세</option>
+        <option value="9">사이트 우측</option>
+        <option value="10">중고나라매물상세상단</option>
+        <option value="11">중고나라매물상세하단</option>
+        <option value="12">이벤트</option>
+      </select>
     </div>
     <table class="table table-bordered list-table">
       <thead>
@@ -21,9 +42,9 @@
           <th></th>
         </tr>
       </thead>
-      <tbody>
+      <tbody class="tbody">
         <% for(let v of lists) { %>
-        <tr>
+        <tr class="tr">
           <td></td>
           <td><%= v.title %></td>
           <td><img src="/<%= v.banner_image %>" alt="" class="mw-100" /></td>
@@ -39,7 +60,12 @@
                 <button class="btn btn-success" style="margin: 0 10px 10px 0">수정</button>
               </a>
               <button class="btn btn-danger" style="margin-bottom: 10px">삭제</button>
-              <button class="btn btn-secondary">링크보기</button>
+              <a
+                href="<%= v.link_url ? v.link_url : `/banner?idx=${v.idx}` %>"
+                class="btn btn-secondary"
+                style="color: #fff"
+                >링크보기</a
+              >
             </div>
           </td>
         </tr>
@@ -48,4 +74,46 @@
     </table>
   </div>
 </div>
+<script>
+  const searchSelectChange = async (el) => {
+    let tbody = document.querySelector('.tbody');
+    let tr = document.querySelectorAll('.tr');
+    let site_id = document.querySelector('#site_id').value;
+    let area_code = document.querySelector('#area_code').value;
+    let url = `/admin/banner/search?site_id=${site_id}`;
+    if (area_code) {
+      url += `&area_code=${area_code}`;
+    }
+    const { data } = await axios.get(url);
+    tr.forEach((v) => {
+      v.remove();
+    });
+    let html = '';
+    for (let v of data) {
+      html = `
+        <tr class="tr">
+          <td></td>
+          <td>${v.title}</td>
+          <td><img src="/${v.banner_image}" alt="" class="mw-100" /></td>
+          <td><input type="text" value="${v.order_no}" /></td>
+          <td>${v.start_date} ~ ${v.end_date}</td>
+          <td class="${v.is_on_color}">${v.is_on}</td>
+          <td>${v.mod_date}</td>
+          <td>${v.view_count}</td>
+          <td>${v.click_count}</td>
+          <td>
+            <div style="display: flex; flex-wrap: wrap">
+              <a href="/admin/banner?idx=${v.idx}">
+                <button class="btn btn-success" style="margin: 0 10px 10px 0">수정</button>
+              </a>
+              <button class="btn btn-danger" style="margin-bottom: 10px">삭제</button>
+              <button class="btn btn-secondary">링크보기</button>
+            </div>
+          </td>
+        </tr>
+      `;
+      tbody.innerHTML += html;
+    }
+  };
+</script>
 <%- include('../inc/foot.ejs') %>
