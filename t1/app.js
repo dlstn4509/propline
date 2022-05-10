@@ -8,6 +8,7 @@ const method = require('./middlewares/method-mw');
 const session = require('./middlewares/session-mw');
 const locals = require('./middlewares/locals-mw');
 const navCount = require('./middlewares/navCount-mw');
+const isUser = require('./middlewares/isUser-mw');
 const passport = require('passport');
 const passportModule = require('./passport');
 
@@ -34,8 +35,8 @@ app.use(passport.session());
 
 /***************** locals *****************/
 app.use(locals);
-
 app.use(navCount);
+app.use(isUser());
 
 /*************** router init **************/
 // const apiMapRouter = require('./routes/api/map');
@@ -73,6 +74,8 @@ app.use('/api/main', mainRouter);
 const adminLoginRouter = require('./routes/admin/login');
 app.use('/admin', adminLoginRouter);
 app.use('/admin/login', adminLoginRouter);
+const adminLogoutRouter = require('./routes/admin/logout');
+app.use('/admin/logout', adminLogoutRouter);
 const adminSignUpRouter = require('./routes/admin/signUp');
 app.use('/admin/signup', adminSignUpRouter);
 const adminMainRouter = require('./routes/admin/main');
