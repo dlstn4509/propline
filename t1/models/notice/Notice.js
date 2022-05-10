@@ -265,7 +265,6 @@ const updateList = async (body, files) => {
         case 'attached_file1':
           attached_file1 = val.filename;
           attached_file1_oriname = val.originalname;
-          console.log(val.filename);
           break;
         case 'attached_file2':
           attached_file2 = val.filename;

@@ -247,7 +247,6 @@
     }
   });
 
-  let thumbImgInputNum = '<%= list.detail_imageArr %>' ? Number('<%= list.detail_imageArr.length %>') +1 : 1;
-  console.log('<%= list.detail_imageArr.length %>')
+  let thumbImgInputNum = '<%= list.detail_imageArr ? Number(list.detail_imageArr.length) + 1 : 1  %>'
 </script>
 <%- include('../inc/foot.ejs') %>

@@ -47,6 +47,7 @@ const junyubu = async (bcode, _bun, _ji, infotype, bldNm, dongNm) => {
         dongNm
       )}&numOfRows=10000`
     );
+    console.log(data);
     let lists = data.data.response.body.items.item;
     for (let v of lists) {
       if (v.dongNm == dongNm || v.bldNm === bldNm) {

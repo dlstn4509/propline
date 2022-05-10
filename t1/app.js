@@ -46,6 +46,7 @@ app.use(navCount);
 // app.use('/api/buildinginfo', apiBuildingRouter);
 // app.use('/api/board', apiBoardRouter);
 // app.use('/api/test', apiTestRouter);
+
 const isUserRouter = require('./routes/api/isuser');
 app.use('/api/isuser', isUserRouter);
 const signUpRouter = require('./routes/api/signup');
@@ -66,6 +67,8 @@ const freeBoardRouter = require('./routes/api/freeBoard');
 app.use('/api/freeboard', freeBoardRouter);
 const bannerRouter = require('./routes/api/banner');
 app.use('/api/banner', bannerRouter);
+const mainRouter = require('./routes/api/main');
+app.use('/api/main', mainRouter);
 
 const adminLoginRouter = require('./routes/admin/login');
 app.use('/admin', adminLoginRouter);
@@ -111,6 +114,7 @@ let paths = [
   '/paymenthistory',
   '/requestsale',
   '/manual',
+  '/banner',
 ];
 app.get(paths, (req, res, next) => {
   res.sendFile(path.join(__dirname, './public', 'index.html'));

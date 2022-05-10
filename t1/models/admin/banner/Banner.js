@@ -58,7 +58,7 @@ const saveBanner = async (body, files) => {
       // 링크 있음
       sql += `, link_target=${link_target}, link_type=${link_type}`;
       if (link_target === '3') {
-        sql += `, window_width='${window_width}, window_height='${window_height}'`;
+        sql += `, window_width='${window_width}', window_height='${window_height}'`;
       }
       if (link_type === '1') {
         // URL 입력
@@ -90,7 +90,7 @@ const findLists = async (site_id, area_code) => {
   try {
     let sql = `
       SELECT idx, title, banner_image, order_no, start_date, end_date,
-      is_on, mod_date, view_count, click_count
+      is_on, mod_date, view_count, click_count, link_url
       FROM banner
       WHERE site_id=${site_id} 
     `;
