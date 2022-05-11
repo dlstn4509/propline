@@ -2,7 +2,7 @@ const { alert } = require('../modules/util');
 
 module.exports = () => {
   return (req, res, next) => {
-    if (!req.user && req.path.includes('/admin/login')) {
+    if (!req.user && req.path.includes('/login')) {
       next();
     } else if (req.user) {
       next();

@@ -36,7 +36,7 @@ app.use(passport.session());
 /***************** locals *****************/
 app.use(locals);
 app.use(navCount);
-app.use(isUser());
+app.use('/admin', isUser());
 
 /*************** router init **************/
 // const apiMapRouter = require('./routes/api/map');

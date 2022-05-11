@@ -244,7 +244,7 @@ const updateBanner = async (body, files) => {
       // 링크 있음
       // sql += `, link_target=${link_target}, link_type='${link_type}'`;
       if (link_target === '3') {
-        sql += `, window_width='${window_width}, window_height='${window_height}'`;
+        sql += `, window_width='${window_width}', window_height='${window_height}'`;
       }
       if (link_type === '1') {
         // URL 입력

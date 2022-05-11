@@ -8,7 +8,6 @@ router.get('/:item_no', async (req, res, next) => {
   try {
     const { bcode, bun, ji, infotype, bldNm, dongNm } = req.query;
     if (infotype === 'getBrExposPubuseAreaInfo') {
-      console.log('aa');
       const data = await junyubu(bcode, bun, ji, infotype, bldNm, dongNm);
       res.status(200).json(data);
     } else {
