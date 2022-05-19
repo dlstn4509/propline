@@ -70,6 +70,8 @@ const bannerRouter = require('./routes/api/banner');
 app.use('/api/banner', bannerRouter);
 const mainRouter = require('./routes/api/main');
 app.use('/api/main', mainRouter);
+const itemRouter = require('./routes/api/item');
+app.use('/api/item', itemRouter);
 
 const adminLoginRouter = require('./routes/admin/login');
 app.use('/admin', adminLoginRouter);
