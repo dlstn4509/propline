@@ -39,7 +39,7 @@ const findBlockCode = async (blockcode) => {
   try {
     let blockcodeArr = blockcode.split(',');
     let sql = `
-      SELECT blockcode, latlng_list  FROM c011_mapblock
+      SELECT blockcode, eupmyeondong, latlng_list FROM c011_mapblock
       WHERE blockcode='${blockcodeArr[0]}'
     `;
     for (let i = 1; i < blockcodeArr.length; i++) {
@@ -54,7 +54,7 @@ const findBlockCode = async (blockcode) => {
       for (let i = 0; i < arr.length; i++) {
         arr2.push([Number(arr[i].split(',')[0]), Number(arr[i].split(',')[1])]);
       }
-      latlng_list.push({ blockcode: v.blockcode, path: arr2 });
+      latlng_list.push({ blockcode: v.blockcode, eupmyeondong: v.eupmyeondong, path: arr2 });
     }
 
     return latlng_list;
@@ -63,4 +63,18 @@ const findBlockCode = async (blockcode) => {
   }
 };
 
-module.exports = { makeMapBlock, makeLabel, findBlockCode };
+const makeSubway = async () => {
+  try {
+    let sql = `
+      SELECT line, station, latitude, longitude, is_crossed, blockcode_list
+      FROM c003_subway
+      WHERE is_hidden=0
+    `;
+    const [subwayList] = await pool.execute(sql);
+    return subwayList;
+  } catch (err) {
+    throw new Error(err);
+  }
+};
+
+module.exports = { makeMapBlock, makeLabel, findBlockCode, makeSubway };

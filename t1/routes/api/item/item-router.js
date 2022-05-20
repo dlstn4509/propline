@@ -2,7 +2,7 @@ const path = require('path');
 const express = require('express');
 const router = express.Router();
 const createError = require('http-errors');
-const { makeMapBlock, makeLabel, findBlockCode } = require('../../../models/item/Map');
+const { makeMapBlock, makeLabel, findBlockCode, makeSubway } = require('../../../models/item/Map');
 
 router.get('/makemapblock', async (req, res, next) => {
   try {
@@ -28,6 +28,15 @@ router.get('/blockcode', async (req, res, next) => {
     const { blockcode } = req.query;
     const data = await findBlockCode(blockcode);
     res.status(200).json(data);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+router.get('/subway', async (req, res, next) => {
+  try {
+    const subwayList = await makeSubway();
+    res.status(200).json(subwayList);
   } catch (err) {
     res.status(500).json(err);
   }
