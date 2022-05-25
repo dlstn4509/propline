@@ -19,21 +19,21 @@ const mainNoticeLists = async () => {
   }
 };
 
-// const ss = async () => {
-//   try {
-//     let arr = [];
-//     for (let i = 0; i < arr.length; i++) {
-//       let sql = `
-//       INSERT INTO c013_mapblock_postcode_dup SET
-//       idx='${arr[i][0]}', blockcode='${arr[i][1]}', postcode='${arr[i][2]}', sido='${arr[i][3]}', sigungu='${arr[i][4]}', eupmyeondong='${arr[i][5]}'
-//     `;
-//       await pool.execute(sql);
-//     }
-//     return 'success';
-//   } catch (err) {
-//     console.log(err);
-//     throw new Error(err);
-//   }
-// };
+const ss = async () => {
+  try {
+    let arr = [];
+    for (let i = 0; i < arr.length; i++) {
+      let sql = `
+      INSERT INTO c002_legal_dong_code SET
+      idx='${arr[i][0]}', legal_dong_code='${arr[i][1]}', sido='${arr[i][2]}', sigungu='${arr[i][3]}', legal_dong='${arr[i][4]}', eupmyeondong='${arr[i][5]}', ri='${arr[i][6]}', latitude='${arr[i][7]}', longitude='${arr[i][8]}', blockcode_list='${arr[i][9]}'
+    `;
+      await pool.execute(sql);
+    }
+    return 'success';
+  } catch (err) {
+    console.log(err);
+    throw new Error(err);
+  }
+};
 
-module.exports = { mainNoticeLists };
+module.exports = { mainNoticeLists, ss };

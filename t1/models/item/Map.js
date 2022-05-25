@@ -21,15 +21,15 @@ const makeMapBlock = async () => {
   }
 };
 
-const makeLabel = async () => {
+const makeDongList = async () => {
   try {
     let sql = `
       SELECT sido, sigungu, eupmyeondong, latitude, longitude, blockcode_list
       FROM c002_legal_dong_code
       WHERE sido='서울'
     `;
-    const [labelName] = await pool.execute(sql);
-    return labelName;
+    const [dongList] = await pool.execute(sql);
+    return dongList;
   } catch (err) {
     throw new Error(err);
   }
@@ -77,4 +77,37 @@ const makeSubway = async () => {
   }
 };
 
-module.exports = { makeMapBlock, makeLabel, findBlockCode, makeSubway };
+const makeGu = async () => {
+  try {
+    let sql = `
+      SELECT sido, sigungu, latitude, longitude, blockcode_list
+      FROM c002_legal_dong_code
+      WHERE sido='서울' AND LENGTH(sigungu) > 0 AND LENGTH(legal_dong)= 0
+    `;
+    const [gu] = await pool.execute(sql);
+    return gu;
+  } catch (err) {
+    throw new Error(err);
+  }
+};
+
+const makeSeoul = async () => {
+  try {
+    let sql = `
+      SELECT latlng_list
+      FROM c011_mapblock
+      WHERE idx='955'
+    `;
+    const [[seoul]] = await pool.execute(sql);
+    let seoulArr = seoul.latlng_list.split('_');
+    let arr = [];
+    for (let v of seoulArr) {
+      arr.push([Number(v.split(',')[0]), Number(v.split(',')[1])]);
+    }
+    return arr;
+  } catch (err) {
+    throw new Error(err);
+  }
+};
+
+module.exports = { makeMapBlock, makeDongList, findBlockCode, makeSubway, makeGu, makeSeoul };
