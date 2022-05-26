@@ -110,4 +110,42 @@ const makeSeoul = async () => {
   }
 };
 
-module.exports = { makeMapBlock, makeDongList, findBlockCode, makeSubway, makeGu, makeSeoul };
+const findSido = async () => {
+  try {
+    let sql = `
+      SELECT sido
+      FROM c002_legal_dong_code
+      WHERE sigungu='' AND legal_dong='' AND eupmyeondong=''
+    `;
+    const [sido] = await pool.execute(sql);
+    sido.push({ sido: '전국' });
+    return sido;
+  } catch (err) {
+    throw new Error(err);
+  }
+};
+
+const findSigungu = async (sido) => {
+  try {
+    let sql = `
+      SELECT sigungu
+      FROM c002_legal_dong_code
+      WHERE sido='${sido}' AND legal_dong='' AND eupmyeondong='' AND LENGTH(sigungu) > 0
+    `;
+    const [sigungu] = await pool.execute(sql);
+    return sigungu;
+  } catch (err) {
+    throw new Error(err);
+  }
+};
+
+module.exports = {
+  makeMapBlock,
+  makeDongList,
+  findBlockCode,
+  makeSubway,
+  makeGu,
+  makeSeoul,
+  findSido,
+  findSigungu,
+};

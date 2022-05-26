@@ -9,6 +9,8 @@ const {
   makeSubway,
   makeGu,
   makeSeoul,
+  findSido,
+  findSigungu,
 } = require('../../../models/item/Map');
 
 router.get('/makemapblock', async (req, res, next) => {
@@ -62,6 +64,25 @@ router.get('/seoul', async (req, res, next) => {
   try {
     const seoul = await makeSeoul();
     res.status(200).json(seoul);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+router.get('/sido', async (req, res, next) => {
+  try {
+    const sido = await findSido();
+    res.status(200).json(sido);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+router.get('/sigungu', async (req, res, next) => {
+  try {
+    const { sido } = req.query;
+    const sigungu = await findSigungu(sido);
+    res.status(200).json(sigungu);
   } catch (err) {
     res.status(500).json(err);
   }
