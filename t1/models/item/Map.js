@@ -26,7 +26,7 @@ const makeDongList = async () => {
     let sql = `
       SELECT sido, sigungu, eupmyeondong, latitude, longitude, blockcode_list
       FROM c002_legal_dong_code
-      WHERE sido='서울'
+      WHERE sido='서울' AND LENGTH(eupmyeondong) > 0
     `;
     const [dongList] = await pool.execute(sql);
     return dongList;
