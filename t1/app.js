@@ -72,6 +72,8 @@ const mainRouter = require('./routes/api/main');
 app.use('/api/main', mainRouter);
 const itemRouter = require('./routes/api/item');
 app.use('/api/item', itemRouter);
+const contractRouter = require('./routes/api/contract');
+app.use('/api/contract', contractRouter);
 
 const adminLoginRouter = require('./routes/admin/login');
 app.use('/admin', adminLoginRouter);
@@ -120,6 +122,8 @@ let paths = [
   '/requestsale',
   '/manual',
   '/banner',
+  '/schedule',
+  '/contract',
 ];
 app.get(paths, (req, res, next) => {
   res.sendFile(path.join(__dirname, './public', 'index.html'));

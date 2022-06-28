@@ -110,21 +110,6 @@ const makeSeoul = async () => {
   }
 };
 
-const findSido = async () => {
-  try {
-    let sql = `
-      SELECT sido
-      FROM c002_legal_dong_code
-      WHERE sigungu='' AND legal_dong='' AND eupmyeondong=''
-    `;
-    const [sido] = await pool.execute(sql);
-    sido.push({ sido: '전국' });
-    return sido;
-  } catch (err) {
-    throw new Error(err);
-  }
-};
-
 const findSigungu = async (sido) => {
   try {
     let sql = `
@@ -133,7 +118,23 @@ const findSigungu = async (sido) => {
       WHERE sido='${sido}' AND legal_dong='' AND eupmyeondong='' AND LENGTH(sigungu) > 0
     `;
     const [sigungu] = await pool.execute(sql);
+    sigungu.unshift({ sigungu: `${sido}전체` });
     return sigungu;
+  } catch (err) {
+    throw new Error(err);
+  }
+};
+
+const findEupmyeondong = async (sido, sigungu) => {
+  try {
+    let sql = `
+      SELECT DISTINCT(eupmyeondong)
+      FROM c002_legal_dong_code
+      WHERE sido='${sido}' AND sigungu='${sigungu}' AND LENGTH(eupmyeondong) > 0
+    `;
+    const [eupmyeondong] = await pool.execute(sql);
+    eupmyeondong.unshift({ eupmyeondong: `${sigungu} 전체` });
+    return eupmyeondong;
   } catch (err) {
     throw new Error(err);
   }
@@ -146,6 +147,6 @@ module.exports = {
   makeSubway,
   makeGu,
   makeSeoul,
-  findSido,
   findSigungu,
+  findEupmyeondong,
 };
