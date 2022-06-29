@@ -71,8 +71,7 @@ const saveShortContract = async (body) => {
       agent_one_chk,
     } = body;
 
-    let interim1_date = interim1_date_year + '02' + interim1_date_day;
-    // let interim1_date = interim1_date_year + interim1_date_month + interim1_date_day;
+    let interim1_date = interim1_date_year + interim1_date_month + interim1_date_day;
     let balance_date = balance_date_year + balance_date_month + balance_date_day;
     let contract_start_date = contract_start_date_year + contract_start_date_month + contract_start_date_day;
     let contract_finish_date =
