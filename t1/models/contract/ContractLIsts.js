@@ -7,7 +7,7 @@ const findContractLists = async (type) => {
     SELECT
     idx, sido, sigungu, eupmyeondong, bungi, detail_address, grantor_name, grantee_name, contract_date, mod_date
     FROM contract
-    WHERE trade_type=${type}
+    WHERE trade_type=${type} ORDER BY idx DESC
   `;
     let [lists] = await pool.execute(sql);
     lists.forEach((v) => {
