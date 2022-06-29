@@ -56,9 +56,9 @@ router.post('/', async (req, res, next) => {
     }
     // 단기
     else {
-      // const rs = await saveShortContract(req.body);
-      // res.status(200).json(rs);
-      res.json(req.body);
+      const rs = await saveShortContract(req.body);
+      res.status(200).json(rs);
+      // res.json(req.body);
     }
   } catch (err) {
     console.log(err);
