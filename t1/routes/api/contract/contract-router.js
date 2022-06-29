@@ -8,6 +8,10 @@ const { saveRentalContract } = require('../../../models/contract/ContractRental'
 const { saveShortContract } = require('../../../models/contract/ContractShort');
 const { findContractLists } = require('../../../models/contract/ContractLIsts');
 const { findContract } = require('../../../models/contract/FindContract');
+const { UpdateSale } = require('../../../models/contract/UpdateSale');
+const { UpdateLease } = require('../../../models/contract/UpdateLease');
+const { UpdateRental } = require('../../../models/contract/UpdateRental');
+const { UpdateShort } = require('../../../models/contract/UpdateShort');
 
 router.get('/', async (req, res, next) => {
   try {
@@ -29,7 +33,28 @@ router.get('/', async (req, res, next) => {
 
 router.put('/', async (req, res, next) => {
   try {
-    res.status(200).json(req.body);
+    let trade_type = req.body.trade_type;
+    // 매매
+    if (trade_type === 'sale') {
+      const rs = await UpdateSale(req.body);
+      res.status(200).json(rs);
+    }
+    // 전세
+    else if (trade_type === 'lease') {
+      const rs = await UpdateLease(req.body);
+      res.status(200).json(rs);
+    }
+    // 월세
+    else if (trade_type === 'rental') {
+      const rs = await UpdateRental(req.body);
+      res.status(200).json(rs);
+    }
+    // 단기
+    else {
+      const rs = await UpdateShort(req.body);
+      res.status(200).json(rs);
+      // res.status(200).json(req.body);
+    }
   } catch (err) {
     console.log(err);
     res.status(500).json(err);
