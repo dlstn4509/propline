@@ -12,6 +12,19 @@ const { UpdateSale } = require('../../../models/contract/UpdateSale');
 const { UpdateLease } = require('../../../models/contract/UpdateLease');
 const { UpdateRental } = require('../../../models/contract/UpdateRental');
 const { UpdateShort } = require('../../../models/contract/UpdateShort');
+const { deleteContract } = require('../../../models/contract/DeleteContract');
+
+router.delete('/', async (req, res, next) => {
+  try {
+    const { idx } = req.query;
+    const rs = await deleteContract(idx);
+    res.status(200).json(rs);
+    // res.status(200).json(idx);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
 
 router.get('/', async (req, res, next) => {
   try {
@@ -37,22 +50,38 @@ router.put('/', async (req, res, next) => {
     // 매매
     if (trade_type === 'sale') {
       const rs = await UpdateSale(req.body);
-      res.status(200).json(rs);
+      if (rs.affectedRows === 1) {
+        res.status(200).redirect('/contract');
+      } else {
+        next(err);
+      }
     }
     // 전세
     else if (trade_type === 'lease') {
       const rs = await UpdateLease(req.body);
-      res.status(200).json(rs);
+      if (rs.affectedRows === 1) {
+        res.status(200).redirect('/contract');
+      } else {
+        next(err);
+      }
     }
     // 월세
     else if (trade_type === 'rental') {
       const rs = await UpdateRental(req.body);
-      res.status(200).json(rs);
+      if (rs.affectedRows === 1) {
+        res.status(200).redirect('/contract');
+      } else {
+        next(err);
+      }
     }
     // 단기
     else {
       const rs = await UpdateShort(req.body);
-      res.status(200).json(rs);
+      if (rs.affectedRows === 1) {
+        res.status(200).redirect('/contract');
+      } else {
+        next(err);
+      }
       // res.status(200).json(req.body);
     }
   } catch (err) {
@@ -67,22 +96,38 @@ router.post('/', async (req, res, next) => {
     // 매매
     if (trade_type === '1') {
       const rs = await saveSaleContract(req.body);
-      res.status(200).json(rs);
+      if (rs.affectedRows === 1) {
+        res.status(200).redirect('/contract');
+      } else {
+        next(err);
+      }
     }
     // 전세
     else if (trade_type === '2') {
       const rs = await saveLeaseContract(req.body);
-      res.status(200).json(rs);
+      if (rs.affectedRows === 1) {
+        res.status(200).redirect('/contract');
+      } else {
+        next(err);
+      }
     }
     // 월세
     else if (trade_type === '3') {
       const rs = await saveRentalContract(req.body);
-      res.status(200).json(rs);
+      if (rs.affectedRows === 1) {
+        res.status(200).redirect('/contract');
+      } else {
+        next(err);
+      }
     }
     // 단기
     else {
       const rs = await saveShortContract(req.body);
-      res.status(200).json(rs);
+      if (rs.affectedRows === 1) {
+        res.status(200).redirect('/contract');
+      } else {
+        next(err);
+      }
       // res.json(req.body);
     }
   } catch (err) {

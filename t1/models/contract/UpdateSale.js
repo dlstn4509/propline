@@ -66,7 +66,6 @@ const UpdateSale = async (body) => {
       agent2_office_ceo_name,
       agent_one_chk,
     } = body;
-    console.log(body);
     let interim1_date = interim1_date_year + interim1_date_month + interim1_date_day;
     let interim2_date = interim2_date_yaer + interim2_date_month + interim2_date_day;
     let balance_date = balance_date_year + balance_date_month + balance_date_day;
