@@ -5,17 +5,17 @@ const copyContract = async (idx) => {
   try {
     let sql = ``;
     sql = `
-      SELECT AUTO_INCREMENT
-      FROM information_schema.TABLES
-      WHERE TABLE_SCHEMA = "gongsilclub"
-      AND TABLE_NAME = "contract"
+      SELECT idx
+      FROM contract
+      ORDER BY idx DESC
+      LIMIT 1
     `;
-    let [[{ AUTO_INCREMENT: LastIdx }]] = await pool.execute(sql);
+    let [[{ idx: LastIdx }]] = await pool.execute(sql);
 
     sql = `
       INSERT INTO contract
       SELECT
-      ${LastIdx},
+      ${LastIdx + 1},
       sido,
       sigungu,
       eupmyeondong,
