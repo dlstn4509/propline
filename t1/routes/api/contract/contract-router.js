@@ -13,6 +13,7 @@ const { UpdateLease } = require('../../../models/contract/UpdateLease');
 const { UpdateRental } = require('../../../models/contract/UpdateRental');
 const { UpdateShort } = require('../../../models/contract/UpdateShort');
 const { deleteContract } = require('../../../models/contract/DeleteContract');
+const { copyContract } = require('../../../models/contract/ContractCopy');
 
 router.delete('/', async (req, res, next) => {
   try {
@@ -84,6 +85,17 @@ router.put('/', async (req, res, next) => {
       }
       // res.status(200).json(req.body);
     }
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+});
+
+router.post('/copy', async (req, res, next) => {
+  try {
+    let { idx } = req.query;
+    const rs = await copyContract(idx);
+    res.status(200).json(rs);
   } catch (err) {
     console.log(err);
     res.status(500).json(err);

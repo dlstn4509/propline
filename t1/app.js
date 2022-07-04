@@ -124,6 +124,7 @@ let paths = [
   '/banner',
   '/schedule',
   '/contract',
+  '/contractprint',
 ];
 app.get(paths, (req, res, next) => {
   res.sendFile(path.join(__dirname, './public', 'index.html'));
