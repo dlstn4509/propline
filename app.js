@@ -56,5 +56,9 @@ app.use(vhost('t3.propline.co.kr', t3));
 const t4 = require('./t4/app');
 app.use(vhost('t4.propline.co.kr', t4));
 
+/*************** home **************/
+const home = require('./home/app');
+app.use(vhost('home.propline.co.kr', home));
+
 /*************** server init **************/
 require('./modules/server-init')(app, server);
